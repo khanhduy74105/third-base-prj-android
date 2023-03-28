@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".welcome.WelcomeActivity"
+    android:background="@drawable/welcome_bg"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_bg_black">
+
+        <Button
+            android:id="@+id/skipBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+
+            android:background="@drawable/shape_round_button01"
+            android:text="Skip"
+            android:textColor="@color/mainOrange"
+            app:backgroundTint="@color/white" />
+        <LinearLayout
+            android:layout_marginTop="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/skipBtn"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome to"
+                android:textStyle="bold"
+                android:textSize="40sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OrderUp"
+                android:textStyle="bold"
+                android:textSize="40sp"
+                android:textColor="@color/mainOrange"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your favorite food delivered fast at your door"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:maxWidth="300dp"
+                android:textColor="@color/white"
+                />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="30dp"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <View
+                    android:layout_centerVertical="true"
+                    android:layout_width="100dp"
+                    android:layout_height="3dp"
+                    android:background="#FFFFFF"
+                    android:layout_toStartOf="@+id/signinTv"/>
+                <TextView
+                    android:id="@+id/signinTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Sign in with"
+                    android:layout_marginHorizontal="30dp"
+                    android:textColor="@color/white"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    />
+                <View
+                    android:layout_centerVertical="true"
+                    android:layout_width="100dp"
+                    android:layout_height="3dp"
+                    android:background="#FFFFFF"
+                    android:layout_toEndOf="@+id/signinTv"/>
+                />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:orientation="vertical"
+
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <Button
+                        android:id="@+id/facebook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_round_button01"
+                        android:text="Facebook"
+                        android:drawableLeft="@drawable/bg_facebook"
+                        android:textAlignment="center"
+                        android:paddingHorizontal="20dp"
+                        android:textColor="@color/black"
+                        app:backgroundTint="@color/white"
+                        android:layout_marginRight="20dp"
+                        android:drawablePadding="10dp"
+                        />
+
+                    <Button
+                        android:id="@+id/google"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_round_button01"
+                        android:text="Google"
+                        android:drawableLeft="@drawable/bg_google"
+                        android:paddingHorizontal="20dp"
+                        android:textColor="@color/black"
+                        app:backgroundTint="@color/white"
+                        android:drawablePadding="10dp"
+
+                        />
+                </LinearLayout>
+                <Button
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/mormalBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_round_button02"
+                    android:text="Start with email and password"
+                    android:textAlignment="center"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/semi_transparent"
+
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:id="@+id/notHaveTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dont_have"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:id="@+id/signUpTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sign up"
+                        android:textColor="@color/mainOrange"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="10dp"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

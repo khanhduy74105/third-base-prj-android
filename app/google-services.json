@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "49692145438",
+    "project_id": "order-up-a7a83",
+    "storage_bucket": "order-up-a7a83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49692145438:android:2da5f0a93951d63df4fb0f",
+        "android_client_info": {
+          "package_name": "com.example.orderup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49692145438-d98supp3fr9l98v098k8peg4fe1939mh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuw50rT6XpkRaiXXyIHX1MqTIJxN20mos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "49692145438-d98supp3fr9l98v098k8peg4fe1939mh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

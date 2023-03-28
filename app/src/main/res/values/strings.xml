@@ -1,3 +1,13 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <string name="app_name">OrderUp</string>
+    <string name="dont_have">Don\'t have account?</string>
+    <string name="sign_up">Already have an account?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="tag_home">Home</string>
+    <string name="tag_cart">Cart</string>
+    <string name="tag_favorite">Favorite</string>
+    <string name="tag_user">Profile</string>
+
 </resources>
