@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp"
+    android:layout_margin="5dp"
+    android:layout_weight="1"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:id="@+id/foodIv"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/welcome_bg"
+                android:scaleType="fitXY"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                app:layout_constraintTop_toBottomOf="@id/foodIv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp"
+                >
+                <TextView
+                    android:id="@+id/foodNameTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mon gi do"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    />
+                <TextView
+                    android:id="@+id/foodDescriptionTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    app:layout_constraintTop_toBottomOf="@id/foodNameTv"
+                    android:layout_marginTop="5dp"
+                    android:text="this is the fodd what is a as da d asd ad a da sd a asda asd as a asda dqw  assd"
+                    />
+                <TextView
+                    android:id="@+id/foodPriceTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    app:layout_constraintTop_toBottomOf="@id/foodNameTv"
+                    android:text="70.000d"
+                    android:textColor="@color/mainOrange"
+                    android:textStyle="bold"
+                    android:textAlignment="textEnd"
+                    />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageButton
+            android:layout_margin="10dp"
+            android:id="@+id/favBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_favorite"
+            android:background="@drawable/circle_orange"
+            android:layout_alignParentEnd="true"
+            app:tint="@color/white" />
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
