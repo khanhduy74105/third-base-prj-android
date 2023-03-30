@@ -20,8 +20,8 @@ class WelcomeActivity : AppCompatActivity() {
 
         binding.skipBtn.setOnClickListener {
             startActivity(Intent(this, UserDashboardActivity::class.java))
+            finish()
         }
-
         binding.mormalBtn.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }

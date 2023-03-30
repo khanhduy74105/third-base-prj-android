@@ -49,49 +49,164 @@
             android:layout_alignParentBottom="true"
             />
     </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/searchRl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbarRl"
-        android:padding="10dp"
-        >
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/searchTil"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_search_gray">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/searchEt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_edittext01"
-                android:hint="Find for food ..."
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-    </RelativeLayout>
     <ScrollView
         android:id="@+id/homeSv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/searchRl"
+        android:layout_below="@id/toolbarRl"
         android:layout_alignParentBottom="true"
         android:padding="10dp"
         >
-        <LinearLayout
-            android:id="@+id/homeLl"
+        <RelativeLayout
+            android:id="@+id/searchRl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_below="@id/toolbarRl"
+            android:padding="10dp"
             >
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/categoryRcv"
+            <TextView
+                android:id="@+id/searchTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:text="What would you like to order"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="28dp"
                 />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/searchTil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/searchTitle"
+                app:startIconDrawable="@drawable/ic_search_gray"
 
-        </LinearLayout>
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/searchEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_edittext01"
+                    android:hint="Find for food ..."
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+            <LinearLayout
+                android:id="@+id/homeLl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/searchTil"
+                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/categoryRcv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/rcv_category_item_col"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="9"
+                            android:layout_height="wrap_content"
+                            android:text="Featured restaurants"
+                            android:paddingHorizontal="10dp"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:maxLines="1"
+                            />
+                        <TextView
+                            android:layout_weight="2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="View all"
+                            android:textColor="@color/mainOrange"
+                            android:textStyle="bold"
+                            android:maxLines="1"
+                            android:textSize="20sp"
+                            android:textAlignment="textEnd"
+
+                            android:drawableEnd="@drawable/ic_home"
+                            android:drawableTint="@color/mainOrange"
+
+                            />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/restaurantRcv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/rcv_restaurant_carditem_col"
+
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:paddingVertical="10dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="9"
+                            android:layout_height="wrap_content"
+                            android:text="Popular foods"
+                            android:paddingHorizontal="10dp"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:maxLines="1"
+                            />
+                        <TextView
+                            android:layout_weight="2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="View all"
+                            android:textColor="@color/mainOrange"
+                            android:textStyle="bold"
+                            android:maxLines="1"
+                            android:textSize="20sp"
+                            android:textAlignment="textEnd"
+                            android:drawableEnd="@drawable/ic_home"
+                            android:drawableTint="@color/mainOrange"
+
+                            />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/foodsRcv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/rcv_food_item"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
