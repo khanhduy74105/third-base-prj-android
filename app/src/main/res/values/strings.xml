@@ -10,4 +10,7 @@
     <string name="tag_favorite">Favorite</string>
     <string name="tag_user">Profile</string>
 
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 </resources>
