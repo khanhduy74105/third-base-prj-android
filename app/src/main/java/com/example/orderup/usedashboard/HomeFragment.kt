@@ -41,6 +41,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var foodsArraylist: ArrayList<ModelFood>
     private lateinit var adapterFood: FoodsAdapter
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
