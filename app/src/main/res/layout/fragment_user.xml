@@ -1,15 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".usedashboard.UserFragment"
-    android:background="@color/soft_gray">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    >
+    <RelativeLayout
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:padding="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="200dp"
+        android:id="@+id/userRl"
+        >
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/userImgRl">
+            <ImageView
+                android:id="@+id/userIv"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/welcome_bg"
+                android:scaleType="fitXY"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                />
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                />
+        </RelativeLayout>
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/userNameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userImgRl"
+            android:text="User nameaa"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+
+            />
+
+        <ImageButton
+            android:id="@+id/pickImgBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_repair"
+            android:layout_toEndOf="@id/userImgRl"
+            android:layout_alignBottom="@id/userImgRl"
+            android:background="@color/transparent"
+            android:padding="4dp"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="40dp"
+        android:layout_below="@id/userRl"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="vertical"
+        android:id="@+id/lL">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/usernameTil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:startIconDrawable="@drawable/ic_person_gray"
+            android:textColorHint="@color/gray02"
+            android:hint="your username"
+            android:padding="4dp"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/usernameEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/shape_edittext01"
+                android:drawablePadding="10dp"
+                android:textSize="16sp"
+                android:inputType="textPersonName"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addressTil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:startIconDrawable="@drawable/ic_locate"
+            android:textColorHint="@color/gray02"
+            android:hint="your address"
+            android:padding="4dp"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addressEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/shape_edittext01"
+                android:drawablePadding="10dp"
+                android:textSize="16sp"
+                android:inputType="textPersonName"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneTil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:startIconDrawable="@drawable/ic_phone"
+            android:textColorHint="@color/gray02"
+            android:hint="your phone"
+            android:padding="4dp"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/shape_edittext01"
+                android:drawablePadding="10dp"
+                android:textSize="16sp"
+                android:inputType="numberDecimal"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:padding="4dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change your password?"
+                />
+            <TextView
+                android:id="@+id/changePasswordTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click here!"
+                android:layout_marginHorizontal="10dp"
+                android:textColor="@color/mainOrange"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/saveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lL"
+        android:text="Save"
+        android:background="@drawable/shape_round_main"
+        android:layout_centerHorizontal="true"
+        />
+</RelativeLayout>
