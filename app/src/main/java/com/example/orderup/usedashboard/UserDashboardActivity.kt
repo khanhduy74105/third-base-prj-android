@@ -5,9 +5,12 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -33,7 +36,7 @@ class UserDashboardActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle;
-    private lateinit var toolbar: Toolbar
+    private lateinit var toolbar: ImageButton
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,13 +63,25 @@ class UserDashboardActivity : AppCompatActivity() {
                     viewPager.currentItem = 0
                 }
                 R.id.tag_cart -> {
-                    viewPager.currentItem = 1
+                    if(firebaseAuth.uid == null){
+                        startActivity(Intent(this, LoginActivity::class.java))
+                    }else{
+                        viewPager.currentItem = 1
+                    }
                 }
                 R.id.tag_favorite -> {
-                    viewPager.currentItem = 2
+                    if(firebaseAuth.uid == null){
+                        startActivity(Intent(this, LoginActivity::class.java))
+                    }else{
+                        viewPager.currentItem = 2
+                    }
                 }
                 R.id.tag_profile -> {
-                    viewPager.currentItem = 3
+                    if(firebaseAuth.uid == null){
+                        startActivity(Intent(this, LoginActivity::class.java))
+                    }else{
+                        viewPager.currentItem = 3
+                    }
                 }
             }
             true
@@ -81,23 +96,38 @@ class UserDashboardActivity : AppCompatActivity() {
             }
 
             override fun onPageSelected(position: Int) {
+
                 when (position) {
                     0 ->{
                         bottomNavigationView.menu.findItem(R.id.tag_home).isChecked = true
                         navigationView.menu.findItem(R.id.nav_home).isChecked = true
                     }
                     1 ->{
-                        bottomNavigationView.menu.findItem(R.id.tag_cart).setChecked(true)
-                        navigationView.menu.findItem(R.id.nav_myOrder).isChecked = true
+                        if(firebaseAuth.uid == null){
+                            startActivity(Intent(this@UserDashboardActivity, LoginActivity::class.java))
+                        }else{
+                            bottomNavigationView.menu.findItem(R.id.tag_cart).setChecked(true)
+                            navigationView.menu.findItem(R.id.nav_myOrder).isChecked = true
+                        }
 
                     }
                     2 ->{
-                        bottomNavigationView.menu.findItem(R.id.tag_favorite).setChecked(true)
+                        if(firebaseAuth.uid == null){
+                            startActivity(Intent(this@UserDashboardActivity, LoginActivity::class.java))
+                        }else{
+                            bottomNavigationView.menu.findItem(R.id.tag_favorite).setChecked(true)
+
+                        }
 
                     }
                     3 ->{
-                        bottomNavigationView.menu.findItem(R.id.tag_profile).setChecked(true)
-                        navigationView.menu.findItem(R.id.nav_profile).isChecked = true
+                        if(firebaseAuth.uid == null){
+                            startActivity(Intent(this@UserDashboardActivity, LoginActivity::class.java))
+                        }else{
+                            bottomNavigationView.menu.findItem(R.id.tag_profile).setChecked(true)
+                            navigationView.menu.findItem(R.id.nav_profile).isChecked = true
+                        }
+
 
                     }
 
@@ -115,24 +145,38 @@ class UserDashboardActivity : AppCompatActivity() {
         toolbar = binding.toolbar
 //        setSupportActionBar(toolbar)
         navigationView.bringToFront()
-        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
+        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+        toolbar.setOnClickListener {
+            drawerLayout.openDrawer(Gravity.RIGHT)
+        }
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
 
                 R.id.nav_home -> {
+
                     viewPager.currentItem = 0
                     true
                 }
                 R.id.nav_myOrder -> {
-                    viewPager.currentItem = 1
-                    true
+                    if(firebaseAuth.uid == null){
+                        startActivity(Intent(this@UserDashboardActivity, LoginActivity::class.java))
+                        false
+                    }else{
+                        viewPager.currentItem = 1
+                        true
+                    }
                 }
                 R.id.nav_profile -> {
-                    viewPager.currentItem = 3
-                    true
+                    if(firebaseAuth.uid == null){
+                        startActivity(Intent(this@UserDashboardActivity, LoginActivity::class.java))
+                        false
+                    }else{
+                        viewPager.currentItem = 3
+                        true
+                    }
                 }
                 R.id.nav_logout -> {
                     firebaseAuth.signOut()
