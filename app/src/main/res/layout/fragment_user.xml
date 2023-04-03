@@ -171,5 +171,6 @@
         android:text="Save"
         android:background="@drawable/shape_round_main"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
         />
 </RelativeLayout>

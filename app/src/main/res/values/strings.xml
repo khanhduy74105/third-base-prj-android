@@ -9,6 +9,7 @@
     <string name="tag_cart">Cart</string>
     <string name="tag_favorite">Favorite</string>
     <string name="tag_user">Profile</string>
+    <string name="tag_order">Order</string>
 
     <string name="open">Open</string>
     <string name="close">Close</string>

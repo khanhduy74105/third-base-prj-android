@@ -134,6 +134,7 @@
                 android:gravity="center_vertical"
                 >
                 <ImageButton
+                    android:id="@+id/minusFoodBtn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_remove"
@@ -142,6 +143,7 @@
                     app:tint="@color/mainOrange"
                     />
                 <TextView
+                    android:id="@+id/amountFoodTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2"
@@ -150,6 +152,7 @@
                     android:textSize="22dp"
                     />
                 <ImageButton
+                    android:id="@+id/plusFoodBtn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_add"

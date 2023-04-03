@@ -7,15 +7,21 @@
             android:icon="@drawable/ic_home"
             />
         <item
-            android:id="@+id/nav_myOrder"
-            android:title="My order"
+            android:id="@+id/nav_myCart"
+            android:title="My Cart"
             android:icon="@drawable/ic_shopping_basket"
             />
         <item
-            android:id="@+id/nav_delivery"
-            android:title="Delivery address"
-            android:icon="@drawable/ic_locate"
+            android:id="@+id/nav_favorite"
+            android:title="My favorite"
+            android:icon="@drawable/ic_favorite"
             />
+        <item
+            android:id="@+id/nav_order"
+            android:title="My order"
+            android:icon="@drawable/ic_restaurant"
+            />
+
     </group>
     <group android:checkableBehavior="single">
             <item
