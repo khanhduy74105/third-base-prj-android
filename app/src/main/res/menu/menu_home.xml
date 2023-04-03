@@ -12,6 +12,10 @@
         android:icon="@drawable/ic_favorite"
         android:title="@string/tag_favorite"
         />
+    <item android:id="@+id/tag_order"
+        android:icon="@drawable/ic_restaurant"
+        android:title="@string/tag_order"
+        />
     <item android:id="@+id/tag_profile"
         android:icon="@drawable/ic_person_white"
         android:title="@string/tag_user"

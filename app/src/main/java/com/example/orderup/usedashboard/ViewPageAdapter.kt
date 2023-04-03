@@ -8,7 +8,7 @@ class ViewPageAdapter(fragmentManager: FragmentManager, behavior: Int): Fragment
 
 
     override fun getCount(): Int {
-        return 4
+        return 5
     }
 
     override fun getItem(position: Int): Fragment {
@@ -23,6 +23,9 @@ class ViewPageAdapter(fragmentManager: FragmentManager, behavior: Int): Fragment
                 return FavoriteFragment()
             }
             3 -> {
+                return OrderFragment()
+            }
+            4 ->{
                 return UserFragment()
             }
             else -> {

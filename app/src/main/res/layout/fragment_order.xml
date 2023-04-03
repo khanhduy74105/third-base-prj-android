@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".usedashboard.OrderFragment"
+    android:background="@color/white" >
+    <RelativeLayout
+        android:id="@+id/toolbarRl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/shape_toolbar02"
+        >
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_edittext01"
+            android:src="@drawable/ic_back_main"
+            android:padding="4dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:text="Order"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/typeLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/toolbarRl"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/shape_round_button_og"
+        android:backgroundTint="@color/mainOrange"
+        android:padding="4dp"
+        >
+        <Button
+            android:id="@+id/commingBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Coming up"
+            android:background="@drawable/shape_round_main"
+            android:paddingHorizontal="25dp"
+            android:textColor="@color/text_color"
+            android:backgroundTint="@color/button_bg_color"
+            android:textStyle="bold"
+
+            />
+        <Button
+            android:id="@+id/historyBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="History"
+            android:background="@drawable/shape_round_main"
+            android:textColor="@color/text_color"
+            android:backgroundTint="@color/button_bg_color"
+            android:paddingHorizontal="25dp"
+            android:textStyle="bold"
+
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_below="@id/typeLl"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ordersRcv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:itemCount="10"
+            tools:listitem="@layout/rcv_order_items"
+            />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

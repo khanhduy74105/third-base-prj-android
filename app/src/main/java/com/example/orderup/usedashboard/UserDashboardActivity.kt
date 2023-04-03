@@ -1,18 +1,14 @@
 package com.example.orderup.usedashboard
 
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -53,7 +49,7 @@ class UserDashboardActivity : AppCompatActivity() {
         viewPager = binding.viewPager
         bottomNavigationView = binding.bottomNav
 
-        var viewPagerAdapter = ViewPageAdapter(fragmentManager = supportFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
+        val viewPagerAdapter = ViewPageAdapter(fragmentManager = supportFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
         viewPager.adapter = viewPagerAdapter
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
@@ -76,11 +72,18 @@ class UserDashboardActivity : AppCompatActivity() {
                         viewPager.currentItem = 2
                     }
                 }
-                R.id.tag_profile -> {
+                R.id.tag_order -> {
                     if(firebaseAuth.uid == null){
                         startActivity(Intent(this, LoginActivity::class.java))
                     }else{
                         viewPager.currentItem = 3
+                    }
+                }
+                R.id.tag_profile -> {
+                    if(firebaseAuth.uid == null){
+                        startActivity(Intent(this, LoginActivity::class.java))
+                    }else{
+                        viewPager.currentItem = 4
                     }
                 }
             }
@@ -94,9 +97,7 @@ class UserDashboardActivity : AppCompatActivity() {
                 positionOffsetPixels: Int
             ) {
             }
-
             override fun onPageSelected(position: Int) {
-
                 when (position) {
                     0 ->{
                         bottomNavigationView.menu.findItem(R.id.tag_home).isChecked = true
@@ -106,8 +107,8 @@ class UserDashboardActivity : AppCompatActivity() {
                         if(firebaseAuth.uid == null){
                             startActivity(Intent(this@UserDashboardActivity, LoginActivity::class.java))
                         }else{
-                            bottomNavigationView.menu.findItem(R.id.tag_cart).setChecked(true)
-                            navigationView.menu.findItem(R.id.nav_myOrder).isChecked = true
+                            bottomNavigationView.menu.findItem(R.id.tag_cart).isChecked = true
+                            navigationView.menu.findItem(R.id.nav_myCart).isChecked = true
                         }
 
                     }
@@ -115,17 +116,27 @@ class UserDashboardActivity : AppCompatActivity() {
                         if(firebaseAuth.uid == null){
                             startActivity(Intent(this@UserDashboardActivity, LoginActivity::class.java))
                         }else{
-                            bottomNavigationView.menu.findItem(R.id.tag_favorite).setChecked(true)
-
+                            bottomNavigationView.menu.findItem(R.id.tag_favorite).isChecked = true
+                            navigationView.menu.findItem(R.id.nav_favorite).isChecked = true
                         }
+
+                    }
+                    4 ->{
+                        if(firebaseAuth.uid == null){
+                            startActivity(Intent(this@UserDashboardActivity, LoginActivity::class.java))
+                        }else{
+                            bottomNavigationView.menu.findItem(R.id.tag_profile).isChecked = true
+                            navigationView.menu.findItem(R.id.nav_profile).isChecked = true
+                        }
+
 
                     }
                     3 ->{
                         if(firebaseAuth.uid == null){
                             startActivity(Intent(this@UserDashboardActivity, LoginActivity::class.java))
                         }else{
-                            bottomNavigationView.menu.findItem(R.id.tag_profile).setChecked(true)
-                            navigationView.menu.findItem(R.id.nav_profile).isChecked = true
+                            bottomNavigationView.menu.findItem(R.id.tag_order).isChecked = true
+                            navigationView.menu.findItem(R.id.nav_order).isChecked = true
                         }
 
 
@@ -160,7 +171,7 @@ class UserDashboardActivity : AppCompatActivity() {
                     viewPager.currentItem = 0
                     true
                 }
-                R.id.nav_myOrder -> {
+                R.id.nav_myCart -> {
                     if(firebaseAuth.uid == null){
                         startActivity(Intent(this@UserDashboardActivity, LoginActivity::class.java))
                         false
@@ -169,12 +180,30 @@ class UserDashboardActivity : AppCompatActivity() {
                         true
                     }
                 }
-                R.id.nav_profile -> {
+                R.id.nav_favorite -> {
+                    if(firebaseAuth.uid == null){
+                        startActivity(Intent(this@UserDashboardActivity, LoginActivity::class.java))
+                        false
+                    }else{
+                        viewPager.currentItem =2
+                        true
+                    }
+                }
+                R.id.nav_order -> {
                     if(firebaseAuth.uid == null){
                         startActivity(Intent(this@UserDashboardActivity, LoginActivity::class.java))
                         false
                     }else{
                         viewPager.currentItem = 3
+                        true
+                    }
+                }
+                R.id.nav_profile -> {
+                    if(firebaseAuth.uid == null){
+                        startActivity(Intent(this@UserDashboardActivity, LoginActivity::class.java))
+                        false
+                    }else{
+                        viewPager.currentItem = 4
                         true
                     }
                 }
