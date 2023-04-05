@@ -133,11 +133,11 @@
         android:id="@+id/pickImgBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_marginEnd="85dp"
         android:background="@color/transparent"
+        android:contentDescription="btnChange"
         android:padding="15dp"
-        android:src="@drawable/ic_repair"
-        android:layout_alignParentRight="true"
-        />
+        android:src="@drawable/ic_repair" />
 
 </RelativeLayout>

@@ -19,8 +19,7 @@
 <!--            android:exported="false" />-->
         <activity
             android:name=".restaurantdashboard.RestaurantDashboardActivity"
-            android:exported="false"
-            android:theme="@style/NoActionBar">
+            android:exported="false">
             <meta-data android:name="com.google.android.gms.version"
                 android:value="@integer/google_play_services_version" />
         </activity>
