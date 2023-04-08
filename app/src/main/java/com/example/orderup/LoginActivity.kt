@@ -8,6 +8,7 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import com.example.orderup.databinding.ActivityLoginBinding
+import com.example.orderup.restaurantdashboard.RestaurantDashboardActivity
 import com.example.orderup.usedashboard.UserDashboardActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -87,6 +88,10 @@ class LoginActivity : AppCompatActivity() {
                     val userType = snapshot.child("userType").value
                     if (userType =="user"){
                         startActivity(Intent(this@LoginActivity, UserDashboardActivity::class.java))
+                        finish()
+                    }
+                    else if (userType =="owner") {
+                        startActivity(Intent(this@LoginActivity, RestaurantDashboardActivity::class.java))
                         finish()
                     }else{
                         startActivity(Intent(this@LoginActivity, UserDashboardActivity::class.java))
