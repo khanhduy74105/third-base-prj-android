@@ -89,8 +89,12 @@ class LoginActivity : AppCompatActivity() {
                     if (userType =="user"){
                         startActivity(Intent(this@LoginActivity, UserDashboardActivity::class.java))
                         finish()
-                    }else if (userType =="owner"){
+                    }
+                    else if (userType =="owner") {
                         startActivity(Intent(this@LoginActivity, RestaurantDashboardActivity::class.java))
+                        finish()
+                    }else{
+                        startActivity(Intent(this@LoginActivity, UserDashboardActivity::class.java))
                         finish()
                     }
                 }

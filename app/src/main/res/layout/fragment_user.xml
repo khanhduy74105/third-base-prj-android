@@ -24,7 +24,6 @@
                 android:id="@+id/userIv"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/welcome_bg"
                 android:scaleType="fitXY"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"

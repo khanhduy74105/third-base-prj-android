@@ -9,7 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.orderup.R
 import com.example.orderup.databinding.FragmentUserBinding
 import com.google.android.gms.tasks.Task
@@ -104,8 +107,6 @@ class UserFragment : Fragment() {
 
     @SuppressLint("SuspiciousIndentation")
     private fun uploadInfo() {
-        val timestamp = System.currentTimeMillis()
-
         val uid = firebaseAuth.uid!!
         val ref = FirebaseDatabase.getInstance().getReference("Users/$uid")
             ref.child("username").setValue(username)
@@ -143,7 +144,15 @@ class UserFragment : Fragment() {
                             usernameTv.text = snapshot.child("username").value.toString()
                             addressEt.setText(snapshot.child("address").value.toString())
                             phoneEt.setText(snapshot.child("phone").value.toString())
-                            Picasso.get().load(snapshot.child("profileImage").value.toString()).into(imgIv)
+                            val imgUrl = snapshot.child("profileImage").value.toString()
+                            val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+                            Glide.with(imgIv.context)
+                                .load(imgUri)
+                                .apply(
+                                    RequestOptions()
+                                        .placeholder(R.drawable.loading_animation)
+                                        .error(R.drawable.ic_broken_image))
+                                .into(imgIv)
                             progressBar.visibility = View.INVISIBLE
 
                         }
