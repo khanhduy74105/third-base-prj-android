@@ -9,6 +9,7 @@ import com.example.orderup.LoginActivity
 import com.example.orderup.R
 import com.example.orderup.SignUpActivity
 import com.example.orderup.databinding.ActivityWelcomeBinding
+import com.example.orderup.restaurantdashboard.RestaurantDashboardActivity
 import com.example.orderup.usedashboard.UserDashboardActivity
 
 class WelcomeActivity : AppCompatActivity() {
@@ -19,8 +20,10 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
 
         binding.skipBtn.setOnClickListener {
-            startActivity(Intent(this, UserDashboardActivity::class.java))
+//            startActivity(Intent(this, UserDashboardActivity::class.java))
+            startActivity(Intent(this, RestaurantDashboardActivity::class.java))
             finish()
+
         }
         binding.mormalBtn.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
