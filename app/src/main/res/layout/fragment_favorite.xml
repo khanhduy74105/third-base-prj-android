@@ -1,15 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".usedashboard.FavoriteFragment"
-    android:background="@color/purple_500">
+    tools:context=".usedashboard.FavoriteFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/toolbarRl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="60dp"
+        android:background="@drawable/shape_toolbar02"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:text="Favorite"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            />
 
-</FrameLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/typeLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/toolbarRl"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/shape_round_button_og"
+        android:backgroundTint="@color/mainOrange"
+        android:padding="4dp"
+        >
+        <Button
+            android:id="@+id/foodsBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Food items"
+            android:background="@drawable/shape_round_main"
+            android:paddingHorizontal="25dp"
+            android:textColor="@color/text_color"
+            android:backgroundTint="@color/button_bg_color"
+            android:textStyle="bold"
+
+            />
+        <Button
+            android:id="@+id/restaurantsBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Restaurants"
+            android:background="@drawable/shape_round_main"
+            android:textColor="@color/text_color"
+            android:backgroundTint="@color/button_bg_color"
+            android:paddingHorizontal="25dp"
+            android:textStyle="bold"
+
+            />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favoriteRcv"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/typeLl"
+        android:layout_alignParentBottom="true"
+        tools:listitem="@layout/rcv_favorite_items"
+        />
+
+
+</RelativeLayout>

@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import com.example.orderup.R
+import com.example.orderup.databinding.FragmentFavoriteBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,7 +23,10 @@ class FavoriteFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private lateinit var binding: FragmentFavoriteBinding
+    private lateinit var foodBtn: Button
+    private lateinit var restaurantBtn: Button
+    private var isFoodState = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,7 +40,32 @@ class FavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite, container, false)
+        binding = FragmentFavoriteBinding.inflate(inflater,container , false)
+        foodBtn = binding.foodsBtn
+        restaurantBtn = binding.restaurantsBtn
+        foodBtn.isSelected = true
+        restaurantBtn.isSelected = false
+        foodBtn.setOnClickListener {
+            isFoodState = true
+            stateChanged()
+        }
+
+        restaurantBtn.setOnClickListener {
+            isFoodState = false
+            stateChanged()
+        }
+        return binding.root
+    }
+
+    private fun stateChanged() {
+        if (isFoodState){
+            foodBtn.isSelected =  true
+            restaurantBtn.isSelected = false
+
+        }else{
+            foodBtn.isSelected =  false
+            restaurantBtn.isSelected = true
+        }
     }
 
     companion object {

@@ -14,24 +14,11 @@ import com.example.orderup.databinding.FragmentManageFoodBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-private val PICK_IMAGE_REQUEST: Int = 1
-private lateinit var binding: FragmentManageFoodBinding
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-private lateinit var firebaseAuth: FirebaseAuth
-
-private lateinit var pickImgBtn: ImageButton
-private lateinit var imgIv: ImageView
-private lateinit var foodnameEt: TextInputEditText
-private lateinit var desEt: TextInputEditText
-private lateinit var priceEt: TextInputEditText
-private lateinit var saveBtn: Button
-private lateinit var progressBar: ProgressBar
-private lateinit var imgUri: Uri
 /**
  * A simple [Fragment] subclass.
  * Use the [RestaurantFragment.newInstance] factory method to
@@ -42,6 +29,19 @@ class ManageFoodFragmentFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private val PICK_IMAGE_REQUEST: Int = 1
+    private lateinit var binding: FragmentManageFoodBinding
+
+    private lateinit var firebaseAuth: FirebaseAuth
+
+    private lateinit var pickImgBtn: ImageButton
+    private lateinit var imgIv: ImageView
+    private lateinit var foodnameEt: TextInputEditText
+    private lateinit var desEt: TextInputEditText
+    private lateinit var priceEt: TextInputEditText
+    private lateinit var saveBtn: Button
+    private lateinit var progressBar: ProgressBar
+    private lateinit var imgUri: Uri
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -55,7 +55,7 @@ class ManageFoodFragmentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = FragmentManageFoodBinding.inflate(inflater,container,  false)
+        binding = FragmentManageFoodBinding.inflate(inflater,container,  false)
         firebaseAuth = FirebaseAuth.getInstance()
         pickImgBtn = binding.pickImgBtn
         imgIv = binding.userIv

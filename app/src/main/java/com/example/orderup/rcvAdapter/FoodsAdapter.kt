@@ -1,12 +1,14 @@
 package com.example.orderup.rcvAdapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.orderup.FoodDetailActivity
 import com.example.orderup.databinding.RcvFoodItemBinding
 import com.example.orderup.model.ModelFood
 
@@ -38,6 +40,7 @@ class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.HolderFood>{
     override fun onBindViewHolder(holder: HolderFood, position: Int) {
         val model = foodsArraylist[position]
         val foodName = model.foodName
+        val foodId = model.id
         val description = model.description
         val price = model.price
         val url = model.url
@@ -45,6 +48,18 @@ class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.HolderFood>{
         holder.foodNameTv.text = foodName
         holder.foodDescriptionTv.text = description
         holder.foodPriceTv.text = price.toString()
+
+        holder.itemView.setOnClickListener {
+            toDetailFood(foodId)
+        }
+    }
+
+    private fun toDetailFood( foodId: String) {
+        val intent = Intent(context, FoodDetailActivity::class.java)
+        intent.putExtra("foodId", foodId)
+
+        context.startActivity(intent)
+
     }
 
     override fun getItemCount(): Int {

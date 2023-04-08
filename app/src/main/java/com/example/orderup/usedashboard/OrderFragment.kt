@@ -27,7 +27,6 @@ class OrderFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding: FragmentOrderBinding
-    private lateinit var dataBinding: DataBindingUtil
     private lateinit var commingBtn: Button
     private lateinit var historyBtn: Button
     private var isComing: Boolean = true
