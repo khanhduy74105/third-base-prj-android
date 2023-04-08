@@ -21,7 +21,7 @@ class ViewPagerResAdapter (fragmentManager: FragmentManager, behavior: Int) : Fr
                 return ManageFoodFragmentFragment()
             }
             2 -> {
-                return AddCategoryFragment()
+                return ManageCategory()
             }
             3 -> {
                 return CartFragment()
