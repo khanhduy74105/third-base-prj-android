@@ -90,7 +90,7 @@ class ManageFoodFragmentFragment : Fragment() {
             categoryPickDialog()
         }
         pickImgBtn.setOnClickListener {
-            openFileChooser()
+//            openFileChooser()
         }
         saveBtn.setOnClickListener {
             validateData()
@@ -98,24 +98,27 @@ class ManageFoodFragmentFragment : Fragment() {
         return binding.root
     }
     var foodname:String = ""
-    var descripton:String = ""
+    var description:String = ""
     var price:String = ""
     private fun validateData() {
         foodname = foodnameEt.text.toString().trim()
-        descripton = desEt.text.toString().trim()
+        description = desEt.text.toString().trim()
         price = priceEt.text.toString().trim()
         if (foodname.isEmpty()){
             Toast.makeText(this.context, "Enter your food", Toast.LENGTH_SHORT).show()
-        }else if (descripton.isEmpty()){
+        }else if (description.isEmpty()){
             Toast.makeText(this.context, "Enter your Des", Toast.LENGTH_SHORT).show()
         }else if (price.isEmpty()){
             Toast.makeText(this.context, "Price", Toast.LENGTH_SHORT).show()
-        }else if (imgUri == null ){
-            Toast.makeText(this.context, "Choose image!", Toast.LENGTH_SHORT).show()
-        }else{
+//        }else if (imgUri == null ){
+//            Toast.makeText(this.context, "Choose image!", Toast.LENGTH_SHORT).show()
+        }
+        else{
            AddCategory()
         }
     }
+    private var selectedCategoryId = ""
+    private var selectedCategoryTitle = ""
     @SuppressLint("SuspiciousIndentation")
     private fun AddCategory() {
         progressDialog.setMessage("Saving....")
@@ -125,9 +128,9 @@ class ManageFoodFragmentFragment : Fragment() {
         hashMap["id"]="$timestamp"
         hashMap["uid"] = uid
         hashMap["foodname"] = foodname
-        hashMap["descripton"] = descripton
+        hashMap["description"] = description
         hashMap["price"] = price
-        hashMap["category"]= category
+        hashMap["category"]= selectedCategoryTitle
         hashMap["timestamp"] = timestamp
         hashMap["buyCount"]=0
         hashMap["numberOfLike"]=0
@@ -136,7 +139,7 @@ class ManageFoodFragmentFragment : Fragment() {
         Log.i(TAG, "$uid")
 
         val ref = FirebaseDatabase.getInstance().getReference("Foods")
-        uploadImgToStorage("$timestamp")
+//        uploadImgToStorage("$timestamp")
         ref.child(timestamp.toString())
             .setValue(hashMap)
             .addOnSuccessListener {
@@ -150,27 +153,26 @@ class ManageFoodFragmentFragment : Fragment() {
             }
 
     }
-    private fun openFileChooser() {
-        val intent = Intent()
-        intent.type= "image/*"
-        intent.action= Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == AppCompatActivity.RESULT_OK && data != null && data.data != null){
-            imgUri = data.data!!
-            Glide.with(imgIv.context)
-                .load(imgUri)
-                .apply(
-                    RequestOptions()
-                        .placeholder(R.drawable.loading_animation)
-                        .error(R.drawable.ic_broken_image))
-                .into(imgIv)
-        }
-    }
-    private var selectedCategoryId = ""
-    private var selectedCategoryTitle = ""
+//    private fun openFileChooser() {
+//        val intent = Intent()
+//        intent.type= "image/*"
+//        intent.action= Intent.ACTION_GET_CONTENT
+//        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+//    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == AppCompatActivity.RESULT_OK && data != null && data.data != null){
+//            imgUri = data.data!!
+//            Glide.with(imgIv.context)
+//                .load(imgUri)
+//                .apply(
+//                    RequestOptions()
+//                        .placeholder(R.drawable.loading_animation)
+//                        .error(R.drawable.ic_broken_image))
+//                .into(imgIv)
+//        }
+//    }
+
     private fun categoryPickDialog(){
         Log.d(TAG, "categoryPickDialog: categoryPickDialog categories")
 
@@ -214,21 +216,21 @@ class ManageFoodFragmentFragment : Fragment() {
 
         })
     }
-    private fun uploadImgToStorage(path: String) {
-        val filePathAndName = "foods/$path"
-        val storageRef = FirebaseStorage.getInstance().getReference(filePathAndName)
-        storageRef.putFile(imgUri!!)
-            .addOnSuccessListener {taskSnapshot ->
-                val uriTask: Task<Uri> = taskSnapshot.storage.downloadUrl
-                while (!uriTask.isSuccessful);
-
-                Toast.makeText(this.context, "Updated food!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener{
-                Toast.makeText(this.context, "failed upload img due to ${it.message}", Toast.LENGTH_SHORT).show()
-            }
-
-    }
+//    private fun uploadImgToStorage(path: String) {
+//        val filePathAndName = "foods/$path"
+//        val storageRef = FirebaseStorage.getInstance().getReference(filePathAndName)
+//        storageRef.putFile(imgUri!!)
+//            .addOnSuccessListener {taskSnapshot ->
+//                val uriTask: Task<Uri> = taskSnapshot.storage.downloadUrl
+//                while (!uriTask.isSuccessful);
+//
+//                Toast.makeText(this.context, "Updated food!", Toast.LENGTH_SHORT).show()
+//            }
+//            .addOnFailureListener{
+//                Toast.makeText(this.context, "failed upload img due to ${it.message}", Toast.LENGTH_SHORT).show()
+//            }
+//
+//    }
     companion object {
         /**
          * Use this factory method to create a new instance of

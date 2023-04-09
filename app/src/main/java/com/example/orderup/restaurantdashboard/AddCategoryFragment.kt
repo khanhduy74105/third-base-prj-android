@@ -45,7 +45,6 @@ class AddCategoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentAddCategoryBinding.inflate(inflater,container,  false)
-
         return  binding.root
     }
 

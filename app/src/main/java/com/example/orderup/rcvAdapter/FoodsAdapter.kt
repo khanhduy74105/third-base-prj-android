@@ -57,7 +57,6 @@ class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.HolderFood>{
     private fun toDetailFood( foodId: String) {
         val intent = Intent(context, FoodDetailActivity::class.java)
         intent.putExtra("foodId", foodId)
-
         context.startActivity(intent)
 
     }
