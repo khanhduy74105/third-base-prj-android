@@ -55,7 +55,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbarRl"
         android:layout_alignParentBottom="true"
-        android:padding="10dp"
         >
         <RelativeLayout
             android:id="@+id/searchRl"
@@ -73,29 +72,45 @@
                 android:textColor="@color/black"
                 android:textSize="28dp"
                 />
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/searchTil"
+            <LinearLayout
+                android:id="@+id/searchLl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/searchTitle"
-                app:startIconDrawable="@drawable/ic_search_gray"
-
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/searchEt"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/searchTil"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shape_edittext01"
-                    android:hint="Find for food ..."
+                    app:startIconDrawable="@drawable/ic_restaurant"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/searchEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_edittext01"
+                        android:hint="Find for food ..."
 
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <ImageView
+                    android:id="@+id/seacrhBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_search_gray"
+                    android:layout_gravity="center"
                     />
-            </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/homeLl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_below="@id/searchTil"
+                android:layout_below="@id/searchLl"
                 >
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categoryRcv"

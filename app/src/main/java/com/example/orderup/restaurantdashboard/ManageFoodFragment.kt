@@ -125,13 +125,13 @@ class ManageFoodFragmentFragment : Fragment() {
         hashMap["id"]="$timestamp"
         hashMap["uid"] = uid
         hashMap["foodname"] = foodname
-        hashMap["descripton"] = descripton
+        hashMap["description"] = descripton
         hashMap["price"] = price
-        hashMap["category"]= category
+        hashMap["category"]= selectedCategoryTitle
         hashMap["timestamp"] = timestamp
         hashMap["buyCount"]=0
         hashMap["numberOfLike"]=0
-        hashMap["imageUrl"]="foods/$timestamp"
+        hashMap["imageUrl"]=""
         Log.i(TAG, "${hashMap}}")
         Log.i(TAG, "$uid")
 
@@ -221,7 +221,9 @@ class ManageFoodFragmentFragment : Fragment() {
             .addOnSuccessListener {taskSnapshot ->
                 val uriTask: Task<Uri> = taskSnapshot.storage.downloadUrl
                 while (!uriTask.isSuccessful);
-
+                val uploadPdfUrl = "${uriTask.result}"
+                val ref = FirebaseDatabase.getInstance().getReference("Foods/$path")
+                ref.child("imageUrl").setValue(uploadPdfUrl)
                 Toast.makeText(this.context, "Updated food!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener{

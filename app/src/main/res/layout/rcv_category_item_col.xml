@@ -7,16 +7,24 @@
     android:background="@drawable/shape_round_main"
     android:layout_marginLeft="5dp"
     >
-    <ImageView
-        android:id="@+id/categoryIv"
+
+    <androidx.cardview.widget.CardView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/bg_google"
         android:padding="5dp"
-        android:background="@drawable/shape_round_button01"
-        />
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        app:cardCornerRadius="25dp"
+        >
+        <ImageView
+            android:id="@+id/categoryIv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/welcome_bg"
+            android:background="@drawable/shape_round_button01"
+            />
+    </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/categoryTv"
         android:layout_width="50dp"

@@ -35,7 +35,7 @@ class AddCategoryFragment : Fragment() {
     private lateinit var binding: FragmentAddCategoryBinding
     private lateinit var categoryEt : TextInputEditText
     private lateinit var saveBtn: Button
-    private lateinit var context:Context
+    private lateinit var context: Context
     val TAG = "Add category"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

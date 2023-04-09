@@ -66,37 +66,39 @@ class RestaurantDashboardActivity : AppCompatActivity() {
             true
         }
 
-        viewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
                 positionOffsetPixels: Int
             ) {
             }
+
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 ->{
+                    0 -> {
                         bottomNavigationView.menu.findItem(R.id.tag_home).isChecked = true
                         navigationView.menu.findItem(R.id.nav_home).isChecked = true
                     }
-                    1 ->{
-                            bottomNavigationView.menu.findItem(R.id.tag_cart).isChecked = true
-                            navigationView.menu.findItem(R.id.nav_myCart).isChecked = true
+                    1 -> {
+                        bottomNavigationView.menu.findItem(R.id.tag_cart).isChecked = true
+                        navigationView.menu.findItem(R.id.nav_myCart).isChecked = true
                     }
-                    2 ->{
-                            bottomNavigationView.menu.findItem(R.id.tag_favorite).isChecked = true
-                            navigationView.menu.findItem(R.id.nav_favorite).isChecked = true
+                    2 -> {
+                        bottomNavigationView.menu.findItem(R.id.tag_favorite).isChecked = true
+                        navigationView.menu.findItem(R.id.nav_favorite).isChecked = true
                     }
-                    4 ->{
-                            bottomNavigationView.menu.findItem(R.id.tag_profile).isChecked = true
-                            navigationView.menu.findItem(R.id.nav_profile).isChecked = true
+                    4 -> {
+                        bottomNavigationView.menu.findItem(R.id.tag_profile).isChecked = true
+                        navigationView.menu.findItem(R.id.nav_profile).isChecked = true
                     }
-                    3 ->{
-                            bottomNavigationView.menu.findItem(R.id.tag_order).isChecked = true
-                            navigationView.menu.findItem(R.id.nav_order).isChecked = true
+                    3 -> {
+                        bottomNavigationView.menu.findItem(R.id.tag_order).isChecked = true
+                        navigationView.menu.findItem(R.id.nav_order).isChecked = true
                     }
                 }
             }
+
             override fun onPageScrollStateChanged(state: Int) {
             }
 
@@ -109,7 +111,7 @@ class RestaurantDashboardActivity : AppCompatActivity() {
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-
+        navigationView.bringToFront()
         binding.homeRes.addDrawerListener(toggle)
         toggle.syncState()
         toolbar = binding.toolbar
@@ -123,28 +125,28 @@ class RestaurantDashboardActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_myCart -> {
-                        viewPager.currentItem = 1
-                        true
+                    viewPager.currentItem = 1
+                    true
                 }
                 R.id.nav_favorite -> {
 
-                        viewPager.currentItem =2
-                        true
+                    viewPager.currentItem = 2
+                    true
                 }
                 R.id.nav_order -> {
-                        viewPager.currentItem = 3
-                        true
+                    viewPager.currentItem = 3
+                    true
                 }
                 R.id.nav_profile -> {
-                        viewPager.currentItem = 4
-                        true
+                    viewPager.currentItem = 4
+                    true
                 }
                 R.id.nav_logout -> {
                     firebaseAuth.signOut()
                     startActivity(Intent(this, WelcomeActivity::class.java))
                     true
                 }
-                R.id.nav_login ->{
+                R.id.nav_login -> {
                     startActivity(Intent(this, LoginActivity::class.java))
                     true
                 }
