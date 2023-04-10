@@ -43,7 +43,6 @@ class ManageCategory : Fragment() {
     private lateinit var adapterCategoryFragment: CategorysAdapter
     val TAG = "Add category"
     private lateinit var binding: FragmentManageCategoryBinding
-    var list = ArrayList<ModelCategory>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -56,7 +55,6 @@ class ManageCategory : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        list= getDataCategory()
         binding = FragmentManageCategoryBinding.inflate(inflater,container,  false)
         loadCategory(container)
         binding.button.setOnClickListener{
@@ -66,7 +64,8 @@ class ManageCategory : Fragment() {
     }
 
     var category =""
-    fun getDataCategory(): ArrayList<ModelCategory> {
+
+    private fun loadCategory(container: ViewGroup?) {
         var categorysArraylist = ArrayList<ModelCategory>()
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("Categorys")
@@ -75,20 +74,16 @@ class ManageCategory : Fragment() {
                 for (ds in snapshot.getChildren()) {
                     val category = ds.getValue<ModelCategory>(ModelCategory::class.java)
                     categorysArraylist.add(category!!)
-                   val name = category!!.category
-                   Log.d(TAG,"$name")
+                    val name = category!!.category
+                    Log.d(TAG,"$name")
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.w(TAG, "Failed to read value.", error.toException())
             }
         })
-        return categorysArraylist
-    }
-    private fun loadCategory(container: ViewGroup?) {
         binding.rcvCategory.layoutManager = GridLayoutManager(context, 2)
-        adapterCategoryFragment = CategorysAdapter(container!!.context, list)
+        adapterCategoryFragment = CategorysAdapter(container!!.context, categorysArraylist)
         binding.rcvCategory.adapter = adapterCategoryFragment
     }
     fun CreateDialog() {
