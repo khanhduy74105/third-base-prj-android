@@ -2,25 +2,36 @@ package com.example.orderup.rcvAdapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
+import com.bumptech.glide.request.RequestOptions
 import com.example.orderup.FoodDetailActivity
+import com.example.orderup.R
 import com.example.orderup.databinding.RcvFoodItemBinding
+import com.example.orderup.model.ModelCategory
 import com.example.orderup.model.ModelFood
 
-class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.HolderFood>{
+class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.HolderFood>, Filterable{
     private lateinit var binding: RcvFoodItemBinding
 
     private var context: Context
-    private var foodsArraylist: ArrayList<ModelFood>
-
+    public var foodsArraylist: ArrayList<ModelFood>
+    private var filterList: ArrayList<ModelFood>
+    private var filter: FilterFoods? = null
     constructor(context: Context, foodsArraylist: ArrayList<ModelFood>) : super() {
         this.context = context
         this.foodsArraylist = foodsArraylist
+        this.filterList = foodsArraylist
     }
 
 
@@ -39,19 +50,29 @@ class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.HolderFood>{
 
     override fun onBindViewHolder(holder: HolderFood, position: Int) {
         val model = foodsArraylist[position]
-        val foodName = model.foodName
+        val foodName = model.foodname
         val foodId = model.id
         val description = model.description
         val price = model.price
-        val url = model.url
+        val imageUrl = model.imageUrl
 
         holder.foodNameTv.text = foodName
         holder.foodDescriptionTv.text = description
-        holder.foodPriceTv.text = price.toString()
+        holder.foodPriceTv.text = price
+        val imgUri = imageUrl.toUri().buildUpon().scheme("https").build()
+        Glide.with(holder.foodIv.context)
+            .load(imgUri)
+            .centerCrop()
+            .apply(
+                RequestOptions()
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image))
+            .into(holder.foodIv)
 
         holder.itemView.setOnClickListener {
             toDetailFood(foodId)
         }
+        Log.i("ADAPTER", foodName)
     }
 
     private fun toDetailFood( foodId: String) {
@@ -63,6 +84,13 @@ class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.HolderFood>{
 
     override fun getItemCount(): Int {
         return foodsArraylist.size
+    }
+
+    override fun getFilter(): Filter {
+        if (filter == null){
+            filter = FilterFoods(filterList, this)
+        }
+        return filter as FilterFoods
     }
 
 }
