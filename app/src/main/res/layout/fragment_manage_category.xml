@@ -26,6 +26,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:background="@color/white"
         android:id="@+id/rcvCategory"
+        tools:listitem="@layout/rcv_category_item_restaurant"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="600dp"
         android:layout_marginStart="4dp"

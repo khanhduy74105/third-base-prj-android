@@ -40,7 +40,7 @@
             android:layout_alignParentBottom="true"
             app:itemIconTint="@color/custom_home_color"
             app:itemTextColor="@color/custom_home_color"
-            app:menu="@menu/menu_home"
+            app:menu="@menu/menu_bottom_restaurant"
             />
         <ImageButton
             android:id="@+id/toolbar"

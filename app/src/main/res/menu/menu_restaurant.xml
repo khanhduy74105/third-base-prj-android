@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_order" android:title="Order"
-            android:icon="@drawable/bg_facebook"></item>
-        <item android:id="@+id/nav_food" android:title="Food"
-            android:icon="@drawable/bg_facebook"></item>
-        <item android:id="@+id/nav_money" android:title="Profit"
-            android:icon="@drawable/bg_facebook"></item>
+        <item
+            android:id="@+id/nav_home"
+            android:title="Home"
+            android:icon="@drawable/ic_home"
+            />
+        <item
+            android:id="@+id/nav_myCart"
+            android:title="Manage Order"
+            android:icon="@drawable/ic_shopping_basket"
+            />
+        <item
+            android:id="@+id/nav_favorite"
+            android:title="Manage Food"
+            android:icon="@drawable/ic_favorite"
+            />
+        <item
+            android:id="@+id/nav_order"
+            android:title="Chart"
+            android:icon="@drawable/ic_restaurant"
+            />
+        <item
+            android:id="@+id/nav_profile"
+            android:title="Manage Money"
+            android:icon="@drawable/ic_person_white"
+            />
     </group>
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_profile" android:title="Profile"
-            android:icon="@drawable/bg_facebook"></item>
-        <item android:id="@+id/sign_out" android:title="Sign Out"
-            android:icon="@drawable/bg_facebook"></item>
+        <item
+            android:title="Profile">
+            <menu>
+                <item
+                    android:id="@+id/nav_logout"
+                    android:title="Logout"
+                    android:icon="@drawable/ic_logout_white"
+                    />
+
+            </menu>
+        </item>
+        <item
+            android:id="@+id/nav_login"
+            android:title="Log in"
+            android:icon="@drawable/ic_logout_white"
+            />
     </group>
 </menu>

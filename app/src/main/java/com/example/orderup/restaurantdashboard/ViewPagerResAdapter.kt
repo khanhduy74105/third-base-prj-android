@@ -18,19 +18,19 @@ class ViewPagerResAdapter (fragmentManager: FragmentManager, behavior: Int) : Fr
                 return AboutRestaurantFragment()
             }
             1 -> {
-                return ManageFoodFragmentFragment()
+                return ManageOrder()
             }
             2 -> {
                 return ManageCategory()
             }
             3 -> {
-                return CartFragment()
+                return Chart()
             }
             4 ->{
-                return FavoriteFragment()
+                return ManageMoney()
             }
             else -> {
-                return HomeFragment()
+                return AboutRestaurantFragment()
             }
         }
     }

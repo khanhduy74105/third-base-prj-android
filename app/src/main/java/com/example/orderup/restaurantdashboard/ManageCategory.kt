@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.orderup.R
 import com.example.orderup.databinding.FragmentManageCategoryBinding
 import com.example.orderup.model.ModelCategory
+import com.example.orderup.rcvAdapter.CategoryAdapter
 import com.example.orderup.rcvAdapter.CategorysAdapter
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -40,9 +41,9 @@ class ManageCategory : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var progressDialog: ProgressDialog
     private lateinit var categoryEt : TextInputEditText
-    private lateinit var adapterCategoryFragment: CategorysAdapter
     val TAG = "Add category"
     private lateinit var binding: FragmentManageCategoryBinding
+    private lateinit var categoriesArraylist: ArrayList<ModelCategory>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -56,7 +57,7 @@ class ManageCategory : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentManageCategoryBinding.inflate(inflater,container,  false)
-        loadCategory(container)
+        loadCategories(container!!)
         binding.button.setOnClickListener{
            CreateDialog()
        }
@@ -65,26 +66,25 @@ class ManageCategory : Fragment() {
 
     var category =""
 
-    private fun loadCategory(container: ViewGroup?) {
-        var categorysArraylist = ArrayList<ModelCategory>()
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("Categorys")
-        myRef.addValueEventListener(object : ValueEventListener {
+    private fun loadCategories(container: ViewGroup) {
+        categoriesArraylist = ArrayList()
+        val ref = FirebaseDatabase.getInstance().getReference("Categorys")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (ds in snapshot.getChildren()) {
-                    val category = ds.getValue<ModelCategory>(ModelCategory::class.java)
-                    categorysArraylist.add(category!!)
-                    val name = category!!.category
-                    Log.d(TAG,"$name")
+                categoriesArraylist.clear()
+                for (ds in snapshot.children) {
+                    val model = ds.getValue(ModelCategory::class.java)
+                    categoriesArraylist.add(model!!)
                 }
+                val adapterCategory = CategorysAdapter(container.context, categoriesArraylist)
+                binding.rcvCategory.layoutManager = GridLayoutManager(container.context, 2)
+                binding.rcvCategory.adapter = adapterCategory
             }
             override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "Failed to read value.", error.toException())
+
             }
+
         })
-        binding.rcvCategory.layoutManager = GridLayoutManager(context, 2)
-        adapterCategoryFragment = CategorysAdapter(container!!.context, categorysArraylist)
-        binding.rcvCategory.adapter = adapterCategoryFragment
     }
     fun CreateDialog() {
         dialogBuiler = AlertDialog.Builder(context)

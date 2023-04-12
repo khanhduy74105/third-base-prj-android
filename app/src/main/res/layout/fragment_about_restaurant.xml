@@ -6,89 +6,105 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_res"
-    >
+    android:orientation="vertical">
 
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/foodoption"
-        android:layout_width="150dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="188dp"
-        android:layout_marginTop="44dp"
-        android:background="@drawable/shape_edittext01"
-        android:drawableTop="@drawable/baseline_fastfood_24"
-        android:drawablePadding="10dp"
-        android:padding="10dp"
-        android:textAlignment="center"
-        android:text="Food"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        app:layout_constraintStart_toStartOf="@+id/orderoption"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/thongke"
-        android:layout_width="150dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="224dp"
-        android:background="@drawable/shape_edittext01"
-        android:drawableTop="@drawable/baseline_fastfood_24"
-        android:drawablePadding="10dp"
-        android:textAlignment="center"
-
-        android:padding="10dp"
-        android:text="thongke"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orderoption" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/moneyoption"
-        android:layout_width="150dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="12dp"
-        android:textAlignment="center"
-
-        android:background="@drawable/shape_edittext01"
-        android:drawableTop="@drawable/baseline_fastfood_24"
-        android:drawablePadding="10dp"
-        android:padding="10dp"
-        android:text="money"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        app:layout_constraintStart_toEndOf="@+id/thongke"
-        app:layout_constraintTop_toBottomOf="@+id/foodoption" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/orderoption"
-        android:layout_width="150dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="44dp"
-        android:background="@drawable/shape_edittext01"
-        android:drawableTop="@drawable/baseline_fastfood_24"
-        android:drawablePadding="10dp"
-        android:padding="10dp"
-        android:textAlignment="center"
-
-        android:text=" Order"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <ImageView
-        android:id="@+id/imageView2"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="@drawable/banner"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="353dp"
+        android:layout_marginTop="304dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/foodoption"
+            android:layout_width="150dp"
+            android:layout_height="120dp"
+            android:background="@drawable/shape_edittext01"
+            android:drawableTop="@drawable/baseline_fastfood_24"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="Food"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/orderoption"
+            app:layout_constraintHorizontal_bias="0.537"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.188" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/orderoption"
+            android:layout_width="150dp"
+            android:layout_height="120dp"
+            android:background="@drawable/shape_edittext01"
+            android:drawableTop="@drawable/baseline_fastfood_24"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text=" Order"
+
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.831"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.188" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/moneyoption"
+            android:layout_width="150dp"
+            android:layout_height="120dp"
+            android:layout_marginEnd="44dp"
+
+            android:background="@drawable/shape_edittext01"
+            android:drawableTop="@drawable/baseline_fastfood_24"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="money"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/orderoption"
+            app:layout_constraintVertical_bias="0.492" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/thongke"
+            android:layout_width="150dp"
+            android:layout_height="120dp"
+            android:background="@drawable/shape_edittext01"
+            android:drawableTop="@drawable/baseline_fastfood_24"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+
+            android:text="thongke"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/moneyoption"
+            app:layout_constraintHorizontal_bias="0.537"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/foodoption"
+            app:layout_constraintVertical_bias="0.492" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
