@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private var category:String = ""
-private lateinit var progressDialog: ProgressDialog
+lateinit var progressDialog: ProgressDialog
 private lateinit var arrayAdapter: ArrayAdapter<*>
 private lateinit var imgUri: Uri
 var TAG ="ADD_FOOD"
@@ -106,13 +106,13 @@ class ManageFoodFragmentFragment : Fragment() {
 //            Toast.makeText(this.context, "Choose image!", Toast.LENGTH_SHORT).show()
         }
         else{
-           AddCategory()
+          AddFood()
         }
     }
     private var selectedCategoryId = ""
     private var selectedCategoryTitle = ""
     @SuppressLint("SuspiciousIndentation")
-    private fun AddCategory() {
+    private fun AddFood() {
         progressDialog.setMessage("Saving....")
         val timestamp = System.currentTimeMillis()
         val uid = firebaseAuth.uid!!

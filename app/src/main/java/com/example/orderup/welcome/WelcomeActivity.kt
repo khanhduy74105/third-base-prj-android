@@ -20,8 +20,8 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
 
         binding.skipBtn.setOnClickListener {
-            startActivity(Intent(this, UserDashboardActivity::class.java))
-//            startActivity(Intent(this, RestaurantDashboardActivity::class.java))
+//            startActivity(Intent(this, UserDashboardActivity::class.java))
+            startActivity(Intent(this, RestaurantDashboardActivity::class.java))
             finish()
 
         }

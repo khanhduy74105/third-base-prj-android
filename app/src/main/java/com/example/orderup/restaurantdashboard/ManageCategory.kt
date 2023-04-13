@@ -14,12 +14,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.orderup.R
 import com.example.orderup.databinding.FragmentManageCategoryBinding
 import com.example.orderup.model.ModelCategory
-import com.example.orderup.rcvAdapter.CategoryAdapter
 import com.example.orderup.rcvAdapter.CategorysAdapter
+import com.example.orderup.restaurantdashboard.ui.ManageFoodFragmentFragment
+import com.example.orderup.restaurantdashboard.ui.TAG
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
-import java.util.Locale.Category
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -69,7 +72,7 @@ class ManageCategory : Fragment() {
     private fun loadCategories(container: ViewGroup) {
         categoriesArraylist = ArrayList()
         val ref = FirebaseDatabase.getInstance().getReference("Categorys")
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+        ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 categoriesArraylist.clear()
                 for (ds in snapshot.children) {
@@ -86,6 +89,7 @@ class ManageCategory : Fragment() {
 
         })
     }
+
     fun CreateDialog() {
         dialogBuiler = AlertDialog.Builder(context)
         dialogBuiler.setTitle("Title")
