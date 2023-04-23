@@ -65,6 +65,9 @@ class ManageFoodFragmentFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentManageFoodBinding.inflate(inflater,container,  false)
+        binding.btnback.setOnClickListener {
+            getActivity()?.getSupportFragmentManager()?.popBackStack();
+        }
         firebaseAuth = FirebaseAuth.getInstance()
         loadPdfCatagories()
         categoryTv = binding.categoryTv

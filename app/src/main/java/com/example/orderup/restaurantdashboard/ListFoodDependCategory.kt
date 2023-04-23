@@ -30,6 +30,7 @@ class ListFoodDependCategory : AppCompatActivity() {
         loadFoods(binding.root)
         val intent = intent
         nameCategory = intent.getStringExtra("categoryName")!!
+        Log.i("NameCategory", "$nameCategory")
         binding.button.setOnClickListener{
             val fragment = ManageFoodFragmentFragment()
             supportFragmentManager.beginTransaction()
@@ -38,7 +39,7 @@ class ListFoodDependCategory : AppCompatActivity() {
                 .commit()
         }
         binding.btnback.setOnClickListener {
-
+            onBackPressed()
         }
         setContentView(binding.root)
     }
@@ -50,8 +51,14 @@ class ListFoodDependCategory : AppCompatActivity() {
                 foodsArraylist.clear()
                 for (ds in snapshot.children) {
                     val model = ds.getValue(ModelFood::class.java)
-                    foodsArraylist.add(model!!)
-                    Log.i("HOMEt", model.foodname)
+                    Log.i("nameCategoryModel",model!!.category)
+                    if (model != null) {
+                        if(model.category == nameCategory){
+                            foodsArraylist.add(model!!)
+                        }
+                        Log.i("HOMEt", model.foodname)
+
+                    }
                 }
                 binding.rcvFood.layoutManager = GridLayoutManager(container.context, 2)
                 adapterFood = ListFoodDependCategoryAdapter(container.context, foodsArraylist)

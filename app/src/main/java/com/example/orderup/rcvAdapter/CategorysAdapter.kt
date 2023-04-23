@@ -40,7 +40,7 @@ class CategorysAdapter : RecyclerView.Adapter<CategorysAdapter.HolderCategory>{
         val nameCategory = model.category
         holder.nameCategoryTV.text = nameCategory
         holder.itemView.setOnClickListener {
-            toListFood(model.timestamp.toString())
+            toListFood(nameCategory)
         }
         Log.i("ADAPTER", nameCategory)
     }

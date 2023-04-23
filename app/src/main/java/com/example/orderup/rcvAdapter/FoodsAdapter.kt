@@ -13,12 +13,10 @@ import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
 import com.bumptech.glide.request.RequestOptions
 import com.example.orderup.FoodDetailActivity
 import com.example.orderup.R
 import com.example.orderup.databinding.RcvFoodItemBinding
-import com.example.orderup.model.ModelCategory
 import com.example.orderup.model.ModelFood
 
 class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.HolderFood>, Filterable{

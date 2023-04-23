@@ -12,6 +12,8 @@ import com.example.orderup.R
 import com.example.orderup.databinding.FragmentAboutRestaurantBinding
 import com.example.orderup.databinding.FragmentManageCategoryBinding
 import com.example.orderup.rcvAdapter.MyAdapterPageSlider
+import com.example.orderup.restaurantdashboard.ManageCategory
+import com.example.orderup.restaurantdashboard.ManageOrder
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -44,6 +46,17 @@ class AboutRestaurantFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentAboutRestaurantBinding.inflate(inflater,container,  false)
+        binding.foodoption.setOnClickListener {
+        }
+        binding.orderoption.setOnClickListener {
+
+        }
+        binding.thongke.setOnClickListener {
+
+        }
+        binding.moneyoption.setOnClickListener {
+
+        }
         sliderShow()
         return binding.root
     }

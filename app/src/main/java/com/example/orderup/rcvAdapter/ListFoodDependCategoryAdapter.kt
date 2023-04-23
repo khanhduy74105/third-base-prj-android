@@ -38,7 +38,6 @@ class ListFoodDependCategoryAdapter : RecyclerView.Adapter<ListFoodDependCategor
 
         return HolderCategory(binding.root)
     }
-
     override fun onBindViewHolder(holder: HolderCategory, position: Int) {
         val model = foodArraylist[position]
         val foodName = model.foodname
@@ -59,11 +58,7 @@ class ListFoodDependCategoryAdapter : RecyclerView.Adapter<ListFoodDependCategor
                     .error(R.drawable.ic_broken_image))
             .into(holder.foodIv)
     }
-
-
-
     override fun getItemCount(): Int {
         return foodArraylist.size
     }
-
 }
