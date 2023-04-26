@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="20dp"
+    app:cardCornerRadius="10dp"
     android:layout_margin="5dp"
     android:layout_weight="1"
     >
@@ -25,13 +25,16 @@
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
             <LinearLayout
                 app:layout_constraintTop_toBottomOf="@id/foodIv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 >
                 <TextView
                     android:id="@+id/foodNameTv"
@@ -39,41 +42,76 @@
                     android:layout_height="wrap_content"
                     android:text="Mon gi do"
                     android:textStyle="bold"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:capitalize="words"
                     />
                 <TextView
                     android:id="@+id/foodDescriptionTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="3"
+                    android:maxLines="2"
+                    android:minLines="2"
                     app:layout_constraintTop_toBottomOf="@id/foodNameTv"
                     android:layout_marginTop="5dp"
                     android:text="this is the fodd what is a as da d asd ad a da sd a asda asd as a asda dqw  assd"
                     />
-                <TextView
-                    android:id="@+id/foodPriceTv"
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3"
-                    app:layout_constraintTop_toBottomOf="@id/foodNameTv"
-                    android:text="70.000d"
-                    android:textColor="@color/mainOrange"
-                    android:textStyle="bold"
-                    android:textAlignment="textEnd"
-                    />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    >
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_star"
+                        app:tint="@color/mainOrange"
+
+                        />
+                    <TextView
+                        android:id="@+id/ratingTv"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="4.5"
+                        android:textColor="@color/mainOrange"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="4dp"
+                        android:textAlignment="textStart"
+                        />
+                    <TextView
+                        android:id="@+id/foodPriceTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="3"
+                        android:text="70.000d"
+                        android:layout_gravity="end"
+                        android:textColor="@color/mainOrange"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textAlignment="textEnd"
+                        />
+                </LinearLayout>
+
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageButton
-            android:layout_margin="10dp"
             android:id="@+id/favBtn"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_favorite"
-            android:background="@drawable/circle_orange"
             android:layout_alignParentEnd="true"
-            app:tint="@color/white" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_favorite"
+            app:tint="@color/mainOrange" />
     </RelativeLayout>
 
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".usedashboard.FavoriteFragment">
 
     <RelativeLayout
@@ -73,6 +74,7 @@
         android:layout_below="@id/typeLl"
         android:layout_alignParentBottom="true"
         tools:listitem="@layout/rcv_favorite_items"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
 
 

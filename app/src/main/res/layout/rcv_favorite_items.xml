@@ -28,6 +28,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
+            android:id="@+id/priceTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10000vnd"

@@ -2,8 +2,11 @@ package com.example.orderup
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.orderup.databinding.ActivityUserSearchBinding
 import com.example.orderup.model.ModelFood
@@ -15,9 +18,10 @@ import com.google.firebase.database.ValueEventListener
 
 class UserSearchActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserSearchBinding
-    private lateinit var searchString:String
-    private lateinit var foodsArraylist:ArrayList<ModelFood>
-    private lateinit var adapterFood:FoodsAdapter
+    private lateinit var searchString: String
+    private lateinit var foodsArraylist: ArrayList<ModelFood>
+    private lateinit var adapterFood: FoodsAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserSearchBinding.inflate(layoutInflater)
@@ -25,7 +29,32 @@ class UserSearchActivity : AppCompatActivity() {
 
         searchString = intent.getStringExtra("searchValue")!!
         binding.searchEt.setText(searchString)
+
         loadFoods()
+
+        binding.searchEt.addTextChangedListener {
+            object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    try {
+                        adapterFood.filter.filter(s)
+                    } catch (e: Exception) {
+                        Log.d("search food", "loi")
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+            }
+        }
     }
 
 
@@ -45,6 +74,7 @@ class UserSearchActivity : AppCompatActivity() {
                 adapterFood.filter.filter(searchString)
 
             }
+
             override fun onCancelled(error: DatabaseError) {
 
             }

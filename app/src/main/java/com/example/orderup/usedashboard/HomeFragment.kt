@@ -10,15 +10,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orderup.R
 import com.example.orderup.UserSearchActivity
 import com.example.orderup.databinding.FragmentHomeBinding
+import com.example.orderup.lib.tool
 import com.example.orderup.model.ModelCategory
 import com.example.orderup.model.ModelFood
+import com.example.orderup.modelview.HomeVIewModel
+import com.example.orderup.modelview.OrderViewModel
 import com.example.orderup.rcvAdapter.CategoryAdapter
 import com.example.orderup.rcvAdapter.FoodsAdapter
 import com.google.firebase.auth.FirebaseAuth
@@ -44,13 +49,11 @@ class HomeFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var binding: FragmentHomeBinding
-
     private lateinit var firebaseAuth: FirebaseAuth
-
     private lateinit var foodsArraylist: ArrayList<ModelFood>
     private lateinit var categoriesArraylist: ArrayList<ModelCategory>
+    private lateinit var homeVIewModel: HomeVIewModel
     private lateinit var adapterFood: FoodsAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,20 +73,34 @@ class HomeFragment : Fragment() {
         checkUser()
         loadCategories(container!!)
         loadFoods(container)
-
+        homeVIewModel = ViewModelProvider(this)[HomeVIewModel::class.java]
+        loadHistorySearchs(container)
         binding.seacrhBtn.setOnClickListener {
             onSearchClick()
         }
         return binding.root
     }
 
+    private fun loadHistorySearchs(container: ViewGroup) {
+        homeVIewModel.historySearchItem.observe(viewLifecycleOwner) {
+            val adapter =
+                ArrayAdapter<String>(container.context, android.R.layout.simple_list_item_1, it)
+            binding.searchEt.setAdapter(adapter)
+        }
+    }
+
     private fun onSearchClick() {
-        val searchingString:String = binding.searchEt.text.toString()
-        if (searchingString.length > 0){
+        val searchingString: String = binding.searchEt.text.toString()
+        if (searchingString.length > 0) {
+            addItemHistorySearch(searchingString)
             val intent = Intent(context, UserSearchActivity::class.java)
             intent.putExtra("searchValue", searchingString)
             startActivity(intent)
         }
+    }
+
+    private fun addItemHistorySearch(searchingString: String) {
+        homeVIewModel.addHistorySearchs(searchingString)
     }
 
     private fun loadCategories(container: ViewGroup) {
@@ -95,7 +112,6 @@ class HomeFragment : Fragment() {
                 for (ds in snapshot.children) {
                     val model = ds.getValue(ModelCategory::class.java)
                     categoriesArraylist.add(model!!)
-
                 }
                 val adapterCategory = CategoryAdapter(container.context, categoriesArraylist)
                 binding.categoryRcv.adapter = adapterCategory
@@ -107,7 +123,6 @@ class HomeFragment : Fragment() {
 
         })
     }
-
     private fun loadFoods(container: ViewGroup) {
         foodsArraylist = ArrayList()
         val ref = FirebaseDatabase.getInstance().getReference("Foods")
@@ -133,26 +148,26 @@ class HomeFragment : Fragment() {
     }
 
     private fun checkUser() {
-        val firebaseUser = firebaseAuth.currentUser
-        if (firebaseUser == null) {
+        val uid: String = tool.getCurrentId()
+        if (uid == "") {
             binding.nameTv.text = "Not logged in"
             binding.addressTv.text = "Log in to delivery"
         } else {
-            val uid: String? = firebaseAuth.currentUser?.uid
-            if (uid != null) {
-                val ref = FirebaseDatabase.getInstance().getReference("Users")
-                ref.child(uid)
-                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            binding.nameTv.text = snapshot.child("username").value.toString()
-                        }
+            val ref = FirebaseDatabase.getInstance().getReference("Users")
+            ref.child(uid)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        binding.nameTv.text = snapshot.child("username").value.toString()
+                        val address = snapshot.child("address").value.toString()
+                        if (address != "") binding.addressTv.text =
+                            snapshot.child("address").value.toString()
+                    }
 
-                        override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
-                        }
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
 
-                    })
-            }
+                })
         }
     }
 

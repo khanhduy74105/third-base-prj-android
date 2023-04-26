@@ -15,4 +15,5 @@
     <color name="transparent">#00000000</color>
     <color name="semi_transparent">#A8393838</color>
     <color name="green">#4EE476</color>
+    <color name="red">#FF0000</color>
 </resources>

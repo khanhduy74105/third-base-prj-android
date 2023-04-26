@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".usedashboard.OrderFragment"
-    android:background="@color/white" >
+    android:background="@color/white">
     <RelativeLayout
         android:id="@+id/toolbarRl"
         android:layout_width="match_parent"
@@ -80,6 +81,7 @@
             android:layout_height="match_parent"
             tools:itemCount="10"
             tools:listitem="@layout/rcv_order_items"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
 
     </LinearLayout>

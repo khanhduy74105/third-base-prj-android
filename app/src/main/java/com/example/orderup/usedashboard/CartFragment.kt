@@ -1,11 +1,25 @@
 package com.example.orderup.usedashboard
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.orderup.R
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.orderup.databinding.FragmentCartBinding
+import com.example.orderup.lib.tool
+import com.example.orderup.model.ModelCartItem
+import com.example.orderup.modelview.CartViewModel
+import com.example.orderup.rcvAdapter.FoodsCartAdapter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,7 +35,9 @@ class CartFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private lateinit var binding: FragmentCartBinding
+    private lateinit var cartItemArraylist: ArrayList<ModelCartItem>
+    private lateinit var cartViewModel: CartViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,9 +49,60 @@ class CartFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false)
+        binding = FragmentCartBinding.inflate(inflater, container, false)
+        cartViewModel = ViewModelProvider(this)[CartViewModel::class.java]
+        if (tool.getCurrentId() != "") loadCartItem(container!!)
+
+        binding.checkoutBtn.setOnClickListener {
+            checkoutOrder()
+        }
+        return binding.root
+    }
+
+    private fun checkoutOrder() {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Confirm  make this order?")
+            .setMessage("Are you sure to order those items")
+            .setPositiveButton("Confirm"){
+                    a,d ->
+                Toast.makeText(context, "Confirming...", Toast.LENGTH_SHORT).show()
+                cartViewModel.checkout(total, context)
+            }
+            .setNegativeButton("Cancel"){
+                    a,d ->
+                a.dismiss()
+            }
+            .show()
+    }
+    
+
+    private fun loadCartItem(container: ViewGroup) {
+        cartViewModel.cartItemArraylist.observe(viewLifecycleOwner){
+            cartItemArraylist = it
+            binding.cartSv.isSelected = it.size != 0
+            val adapterCartItem = FoodsCartAdapter(container.context, it, cartViewModel)
+            binding.cartRcv.adapter = adapterCartItem
+            fillPrice()
+        }
+    }
+
+
+    private var subTotal: Long = 0
+    private var discountPrice: Long = 0
+    private var total: Long = 0
+    private var delivery: Long = 0
+    private fun fillPrice() {
+        subTotal = 0
+        for (model in cartItemArraylist){
+            subTotal += (model.price.toLong() * model.amount)
+            total = subTotal + discountPrice + delivery
+        }
+        binding.subtotalTv.text = subTotal.toString()
+        binding.discountTv.text = discountPrice.toString()
+        binding.totalTv.text = total.toString()
+        binding.deliveryTv.text = delivery.toString()
     }
 
     companion object {
