@@ -20,12 +20,14 @@ import com.example.orderup.R
 import com.example.orderup.UserSearchActivity
 import com.example.orderup.databinding.FragmentHomeBinding
 import com.example.orderup.lib.tool
+import com.example.orderup.model.ModalUser
 import com.example.orderup.model.ModelCategory
 import com.example.orderup.model.ModelFood
 import com.example.orderup.modelview.HomeVIewModel
 import com.example.orderup.modelview.OrderViewModel
 import com.example.orderup.rcvAdapter.CategoryAdapter
 import com.example.orderup.rcvAdapter.FoodsAdapter
+import com.example.orderup.rcvAdapter.RestaurantAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -51,6 +53,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var foodsArraylist: ArrayList<ModelFood>
+    private lateinit var restaurantArraylist: ArrayList<ModalUser>
     private lateinit var categoriesArraylist: ArrayList<ModelCategory>
     private lateinit var homeVIewModel: HomeVIewModel
     private lateinit var adapterFood: FoodsAdapter
@@ -73,12 +76,33 @@ class HomeFragment : Fragment() {
         checkUser()
         loadCategories(container!!)
         loadFoods(container)
+        loadRestaurants(container)
         homeVIewModel = ViewModelProvider(this)[HomeVIewModel::class.java]
         loadHistorySearchs(container)
         binding.seacrhBtn.setOnClickListener {
             onSearchClick()
         }
         return binding.root
+    }
+
+    private fun loadRestaurants(container: ViewGroup) {
+        restaurantArraylist = ArrayList()
+        val ref = FirebaseDatabase.getInstance().getReference("Users")
+        ref.orderByChild("userType").equalTo("owner").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (userSnapshot in snapshot.children) {
+                    val model = userSnapshot.getValue(ModalUser::class.java)
+                    restaurantArraylist.add(model!!)
+                }
+
+                val restaurantAdapter = RestaurantAdapter(container.context, restaurantArraylist)
+                binding.restaurantRcv.adapter = restaurantAdapter
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Xử lý lỗi
+            }
+        })
     }
 
     private fun loadHistorySearchs(container: ViewGroup) {

@@ -30,6 +30,4 @@
             android:inputType="textEmailAddress"
             android:textSize="25sp" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
