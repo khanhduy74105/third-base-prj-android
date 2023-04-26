@@ -6,8 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import com.example.orderup.R
+import androidx.lifecycle.ViewModelProvider
 import com.example.orderup.databinding.FragmentFavoriteBinding
+import com.example.orderup.model.ModelFood
+import com.example.orderup.modelview.FavoriteViewModel
+import com.example.orderup.rcvAdapter.FavoritesAdapter
+import com.example.orderup.rcvAdapter.FoodsAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +30,9 @@ class FavoriteFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteBinding
     private lateinit var foodBtn: Button
     private lateinit var restaurantBtn: Button
+    private lateinit var foodsAdapter: FoodsAdapter
+    private lateinit var foodList: ArrayList<ModelFood>
+    private lateinit var favoriteViewModel: FavoriteViewModel
     private var isFoodState = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +48,7 @@ class FavoriteFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentFavoriteBinding.inflate(inflater,container , false)
+        favoriteViewModel = ViewModelProvider(this)[FavoriteViewModel::class.java]
         foodBtn = binding.foodsBtn
         restaurantBtn = binding.restaurantsBtn
         foodBtn.isSelected = true
@@ -54,9 +62,19 @@ class FavoriteFragment : Fragment() {
             isFoodState = false
             stateChanged()
         }
+        setFavFoods(container!!)
         return binding.root
     }
 
+
+
+    private fun setFavFoods(container: ViewGroup) {
+        favoriteViewModel.favFoodItemArraylist.observe(viewLifecycleOwner){
+            foodList = it
+            val adapterCartItem = FavoritesAdapter(container.context, it, favoriteViewModel)
+            binding.favoriteRcv.adapter = adapterCartItem
+        }
+    }
     private fun stateChanged() {
         if (isFoodState){
             foodBtn.isSelected =  true

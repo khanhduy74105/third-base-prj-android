@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.example.orderup.R
 import com.example.orderup.databinding.FragmentAddCategoryBinding
+import com.example.orderup.lib.tool
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -47,6 +48,26 @@ class AddCategoryFragment : Fragment() {
         val binding = FragmentAddCategoryBinding.inflate(inflater,container,  false)
         return  binding.root
     }
+    var category =""
+    private fun validateData() {
+       category= categoryEt.text.toString().trim()
+        if (category.isEmpty()){
+            Toast.makeText(this.context, "Category", Toast.LENGTH_SHORT).show()
+        }else{
+           AddCategory()
+        }
+    }
+    private fun AddCategory() {
+        progressDialog.setMessage("Saving....")
+        val timestamp = System.currentTimeMillis()
+        val uid = tool.getCurrentId()
+        val hashMap: HashMap<String, Any?> =  HashMap()
+        hashMap["id"]="$timestamp"
+        hashMap["uid"] = uid
+        hashMap["category"]= category
+        hashMap["timestamp"] = timestamp
+        Log.i(TAG, "${hashMap}}")
+        Log.i(TAG, "$uid")
 
 
     companion object {

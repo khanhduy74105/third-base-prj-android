@@ -15,6 +15,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.orderup.R
 import com.example.orderup.databinding.FragmentUserBinding
+import com.example.orderup.lib.tool
+import com.example.orderup.model.ModalUser
 import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -54,6 +56,7 @@ class UserFragment : Fragment() {
     private lateinit var saveBtn: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var imgUri: Uri
+    var currentUser: ModalUser? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -68,7 +71,7 @@ class UserFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentUserBinding.inflate(inflater,container,  false)
+        binding = FragmentUserBinding.inflate(inflater,container,  false)
         firebaseAuth = FirebaseAuth.getInstance()
         pickImgBtn = binding.pickImgBtn
         imgIv = binding.userIv
@@ -107,14 +110,16 @@ class UserFragment : Fragment() {
 
     @SuppressLint("SuspiciousIndentation")
     private fun uploadInfo() {
-        val uid = firebaseAuth.uid!!
-        val ref = FirebaseDatabase.getInstance().getReference("Users/$uid")
+        val uid = tool.getCurrentId()
+        if (uid != ""){
+            val ref = FirebaseDatabase.getInstance().getReference("Users/$uid")
             ref.child("username").setValue(username)
             ref.child("address").setValue(address)
             ref.child("phone").setValue(phone)
                 .addOnSuccessListener {
                     Toast.makeText(this.context, "Updated!!!", Toast.LENGTH_SHORT)
                 }
+        }
     }
 
     private fun openFileChooser() {
@@ -126,16 +131,14 @@ class UserFragment : Fragment() {
     }
 
     fun setUserData(){
-        val firebaseUser = firebaseAuth.currentUser
-        if (firebaseUser == null){
+        val uid = tool.getCurrentId()
+        if (uid == ""){
             usernameEt.setText("Not Loged in")
             addressEt.setText("Not Loged in")
             phoneEt.setText("Not Loged in")
             usernameTv.setText("Not Loged in")
             imgIv.setImageResource(R.drawable.logo_transparent)
         }else{
-            val uid: String? = firebaseAuth.currentUser?.uid
-            if (uid!=null){
                 val ref = FirebaseDatabase.getInstance().getReference("Users")
                 ref.child(uid)
                     .addListenerForSingleValueEvent(object: ValueEventListener {
@@ -164,7 +167,7 @@ class UserFragment : Fragment() {
                     })
 
 
-            }
+
         }
 
 
@@ -178,7 +181,7 @@ class UserFragment : Fragment() {
         }
     }
     private fun uploadImgToStorage() {
-        val uid = firebaseAuth.uid
+        val uid = tool.getCurrentId()
         val filePathAndName = "Avatars/$uid"
         val storageRef = FirebaseStorage.getInstance().getReference(filePathAndName)
         storageRef.putFile(imgUri!!)

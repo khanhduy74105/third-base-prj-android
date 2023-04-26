@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp">
+    <LinearLayout
+        android:id="@+id/userLl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        >
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/userIv"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:src="@drawable/welcome_bg"
+            />
+        <TextView
+            android:id="@+id/usernameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Khach hang"
+            android:textStyle="bold"
+            android:maxLines="1"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toEndOf="@id/userLl"
+        android:layout_alignParentTop="true"
+        android:paddingHorizontal="8dp"
+        >
+        <RatingBar
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_marginBottom="4dp"
+            android:numStars="5"
+            android:rating="4"
+            android:progressTint="@color/mainOrange"
+            />
+        <TextView
+            android:id="@+id/cmtContentTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Wrap all the children inside of another LinearLayout with wrap_content for both the width and the height as well as the vertical orientation."
+            android:maxLines="3"
+            />
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="22/4/2023"
+            android:textStyle="italic"
+            android:textSize="14sp"
+            android:textAlignment="textEnd"
+            />
+
+    </LinearLayout>
+</RelativeLayout>

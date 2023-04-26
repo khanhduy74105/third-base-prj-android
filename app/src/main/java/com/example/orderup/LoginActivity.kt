@@ -8,6 +8,7 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import com.example.orderup.databinding.ActivityLoginBinding
+import com.example.orderup.lib.tool
 import com.example.orderup.restaurantdashboard.RestaurantDashboardActivity
 import com.example.orderup.usedashboard.UserDashboardActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -40,8 +41,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.loginBtn.setOnClickListener {
-
             validateData()
+        }
+
+        binding.google.setOnClickListener {
+            startActivity(Intent(this, GoogleAuthActivity::class.java))
+        }
+
+        binding.facebook.setOnClickListener {
+            startActivity(Intent(this, FacebookActivity::class.java))
         }
     }
     private var email = ""
@@ -64,7 +72,6 @@ class LoginActivity : AppCompatActivity() {
         Log.i(TAG,"loginuser")
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                Log.i(TAG,"dang ki thanh cong")
                 checkUser()
             }
             .addOnFailureListener {
@@ -75,22 +82,20 @@ class LoginActivity : AppCompatActivity() {
 
     private fun checkUser() {
         progressDialog.setMessage("Checking user")
-
-        val firebaseUser = firebaseAuth.currentUser!!
-        Log.i(TAG,"check user")
-
+        val uid = firebaseAuth.currentUser!!.uid
+        tool.setCurrentId(uid)
         val ref = FirebaseDatabase.getInstance().getReference("Users")
-        ref.child(firebaseUser.uid)
+        ref.child(uid)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     progressDialog.dismiss()
-
+                    tool.setCurrentId(uid)
                     val userType = snapshot.child("userType").value
                     if (userType =="user"){
                         startActivity(Intent(this@LoginActivity, UserDashboardActivity::class.java))
                         finish()
                     }
-                    else if (userType =="owner") {
+                    else if (userType == "owner") {
                         startActivity(Intent(this@LoginActivity, RestaurantDashboardActivity::class.java))
                         finish()
                     }else{

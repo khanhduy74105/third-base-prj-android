@@ -40,7 +40,8 @@
             app:itemIconTint="@color/custom_home_color"
             app:itemTextColor="@color/custom_home_color"
             app:menu="@menu/menu_home"
-            />
+            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"/>
+        />
 
 
         <ImageButton

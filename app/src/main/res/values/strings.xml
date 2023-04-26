@@ -24,4 +24,10 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
 
+
+    <string name="facebook_app_id">758175142628289</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">57561ded9740eead1f2f89d3e8d4d475</string>
+
+
 </resources>

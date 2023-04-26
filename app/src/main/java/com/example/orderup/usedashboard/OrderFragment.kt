@@ -9,8 +9,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.view.ViewCompat.setBackgroundTintList
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.example.orderup.R
 import com.example.orderup.databinding.FragmentOrderBinding
+import com.example.orderup.model.ModelOrder
+import com.example.orderup.modelview.CartViewModel
+import com.example.orderup.modelview.OrderViewModel
+import com.example.orderup.rcvAdapter.FoodsCartAdapter
+import com.example.orderup.rcvAdapter.OrdersAdapter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,6 +38,9 @@ class OrderFragment : Fragment() {
     private lateinit var binding: FragmentOrderBinding
     private lateinit var commingBtn: Button
     private lateinit var historyBtn: Button
+    private lateinit var ordersRcv: RecyclerView
+    private lateinit var orderViewModel: OrderViewModel
+    private lateinit var orderItems: ArrayList<ModelOrder>
     private var isComing: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +58,8 @@ class OrderFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding =FragmentOrderBinding.inflate(inflater, container, false)
+        orderViewModel = ViewModelProvider(this)[OrderViewModel::class.java]
+
         commingBtn = binding.commingBtn
         historyBtn = binding.historyBtn
         commingBtn.isSelected = true
@@ -59,7 +73,16 @@ class OrderFragment : Fragment() {
             isComing = false
             stateChanged()
         }
+
+        loadOrderItems(container)
         return binding.root
+    }
+
+    private fun loadOrderItems(container: ViewGroup?) {
+        orderViewModel.orderItems.observe(viewLifecycleOwner){
+            val adapterOrders = OrdersAdapter(it,  container!!.context)
+            binding.ordersRcv.adapter  = adapterOrders
+        }
     }
 
     @SuppressLint("ResourceAsColor")
@@ -67,12 +90,14 @@ class OrderFragment : Fragment() {
         if (isComing){
             commingBtn.isSelected =  true
             historyBtn.isSelected = false
-
+            orderViewModel.changeTypeOrders("isComing")
         }else{
             commingBtn.isSelected =  false
             historyBtn.isSelected = true
+            orderViewModel.changeTypeOrders("confirmed")
         }
     }
+
 
 
     companion object {
