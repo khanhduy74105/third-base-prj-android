@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.orderup.R
 import com.example.orderup.databinding.FragmentManageFoodBinding
+import com.example.orderup.lib.tool
 import com.example.orderup.model.ModelCategory
 import com.example.orderup.restaurantdashboard.RestaurantDashboardActivity
 import com.google.android.gms.tasks.Task
@@ -120,7 +121,7 @@ class ManageFoodFragmentFragment : Fragment() {
     private fun AddCategory() {
         progressDialog.setMessage("Saving....")
         val timestamp = System.currentTimeMillis()
-        val uid = firebaseAuth.uid!!
+        val uid = tool.getCurrentId()
         val hashMap: HashMap<String, Any?> =  HashMap()
         hashMap["id"]="$timestamp"
         hashMap["uid"] = uid

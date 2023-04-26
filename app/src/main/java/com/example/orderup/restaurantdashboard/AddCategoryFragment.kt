@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.example.orderup.R
 import com.example.orderup.databinding.FragmentAddCategoryBinding
+import com.example.orderup.lib.tool
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -75,7 +76,7 @@ class AddCategoryFragment : Fragment() {
     private fun AddCategory() {
         progressDialog.setMessage("Saving....")
         val timestamp = System.currentTimeMillis()
-        val uid = firebaseAuth.uid!!
+        val uid = tool.getCurrentId()
         val hashMap: HashMap<String, Any?> =  HashMap()
         hashMap["id"]="$timestamp"
         hashMap["uid"] = uid
