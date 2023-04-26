@@ -46,7 +46,6 @@
             android:layout_marginLeft="20dp"
             android:textStyle="bold"
             android:textColor="@color/black"
-
             />
 
         <ImageButton
@@ -289,5 +288,5 @@
 
 
         </LinearLayout>
-    </RelativeLayout>
+    </RelativeLayout>g
 </RelativeLayout>

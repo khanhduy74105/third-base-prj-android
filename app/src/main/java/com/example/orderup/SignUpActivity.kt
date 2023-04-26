@@ -85,7 +85,6 @@ class SignUpActivity : AppCompatActivity() {
     private fun updateUserInfo() {
         progressDialog.setMessage("Saving....")
         val timestamp = System.currentTimeMillis()
-
         val uid = firebaseAuth.uid!!
         val hashMap: HashMap<String, Any?> =  HashMap()
         hashMap["uid"] = uid

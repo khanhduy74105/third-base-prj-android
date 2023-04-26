@@ -145,8 +145,6 @@ class HomeFragment : Fragment() {
             }
 
         })
-
-
     }
 
     private fun checkUser() {

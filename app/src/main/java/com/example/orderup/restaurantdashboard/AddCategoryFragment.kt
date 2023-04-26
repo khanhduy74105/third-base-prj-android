@@ -31,13 +31,8 @@ class AddCategoryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var progressDialog: ProgressDialog
     private lateinit var binding: FragmentAddCategoryBinding
-    private lateinit var categoryEt : TextInputEditText
-    private lateinit var saveBtn: Button
-    private lateinit var context: Context
-    val TAG = "Add category"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -51,17 +46,6 @@ class AddCategoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentAddCategoryBinding.inflate(inflater,container,  false)
-        firebaseAuth = FirebaseAuth.getInstance()
-        categoryEt = binding.categoryEt
-        if (container != null) {
-            context=container.context
-        }
-        progressDialog = ProgressDialog(context)
-        progressDialog.setTitle("Please wait")
-        progressDialog.setCanceledOnTouchOutside(false)
-        binding.saveBtn.setOnClickListener {
-            validateData()
-        }
         return  binding.root
     }
     var category =""
@@ -85,24 +69,7 @@ class AddCategoryFragment : Fragment() {
         Log.i(TAG, "${hashMap}}")
         Log.i(TAG, "$uid")
 
-        // set data to db
-        val ref = FirebaseDatabase.getInstance().getReference("Categorys")
-        ref.child(timestamp.toString())
-            .setValue(hashMap)
-            .addOnSuccessListener {
-                Log.i(TAG, "luu vao DB success")
-                progressDialog.dismiss()
-//                Toast.makeText(this, "creating account successfully", Toast.LENGTH_SHORT).show()
-//                finish()
-                startActivity(Intent(requireContext(), RestaurantDashboardActivity::class.java))
-            }
-            .addOnFailureListener {
-                Log.i(TAG, "luu vao DB that bai")
-                progressDialog.dismiss()
-//                Toast.makeText(this, "Failed creating account due to ${it.message}", Toast.LENGTH_SHORT).show()
-            }
 
-    }
     companion object {
         /**
          * Use this factory method to create a new instance of

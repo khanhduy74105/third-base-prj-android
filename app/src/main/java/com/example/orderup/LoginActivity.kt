@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Please wait")
-        progressDialog.setCanceledOnTouchOutside(false)
+        progressDialog.setCanceledOnTouchOutside(true)
 
         binding.loginBtn.setOnClickListener {
             startActivity(Intent(this, UserDashboardActivity::class.java))

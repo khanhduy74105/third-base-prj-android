@@ -3,7 +3,6 @@ package com.example.orderup.restaurantdashboard.ui
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -12,29 +11,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import android.widget.AdapterView.OnItemClickListener
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.example.orderup.R
 import com.example.orderup.databinding.FragmentManageFoodBinding
 import com.example.orderup.lib.tool
 import com.example.orderup.model.ModelCategory
 import com.example.orderup.restaurantdashboard.RestaurantDashboardActivity
-import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.storage.FirebaseStorage
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private var category:String = ""
-private lateinit var progressDialog: ProgressDialog
+lateinit var progressDialog: ProgressDialog
 private lateinit var arrayAdapter: ArrayAdapter<*>
 private lateinit var imgUri: Uri
 var TAG ="ADD_FOOD"
@@ -74,6 +66,9 @@ class ManageFoodFragmentFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentManageFoodBinding.inflate(inflater,container,  false)
+        binding.btnback.setOnClickListener {
+            getActivity()?.getSupportFragmentManager()?.popBackStack();
+        }
         firebaseAuth = FirebaseAuth.getInstance()
         loadPdfCatagories()
         categoryTv = binding.categoryTv
@@ -91,7 +86,7 @@ class ManageFoodFragmentFragment : Fragment() {
             categoryPickDialog()
         }
         pickImgBtn.setOnClickListener {
-            openFileChooser()
+//            openFileChooser()
         }
         saveBtn.setOnClickListener {
             validateData()
@@ -99,26 +94,29 @@ class ManageFoodFragmentFragment : Fragment() {
         return binding.root
     }
     var foodname:String = ""
-    var descripton:String = ""
+    var description:String = ""
     var price:String = ""
     private fun validateData() {
         foodname = foodnameEt.text.toString().trim()
-        descripton = desEt.text.toString().trim()
+        description = desEt.text.toString().trim()
         price = priceEt.text.toString().trim()
         if (foodname.isEmpty()){
             Toast.makeText(this.context, "Enter your food", Toast.LENGTH_SHORT).show()
-        }else if (descripton.isEmpty()){
+        }else if (description.isEmpty()){
             Toast.makeText(this.context, "Enter your Des", Toast.LENGTH_SHORT).show()
         }else if (price.isEmpty()){
             Toast.makeText(this.context, "Price", Toast.LENGTH_SHORT).show()
-        }else if (imgUri == null ){
-            Toast.makeText(this.context, "Choose image!", Toast.LENGTH_SHORT).show()
-        }else{
-           AddCategory()
+//        }else if (imgUri == null ){
+//            Toast.makeText(this.context, "Choose image!", Toast.LENGTH_SHORT).show()
+        }
+        else{
+          AddFood()
         }
     }
+    private var selectedCategoryId = ""
+    private var selectedCategoryTitle = ""
     @SuppressLint("SuspiciousIndentation")
-    private fun AddCategory() {
+    private fun AddFood() {
         progressDialog.setMessage("Saving....")
         val timestamp = System.currentTimeMillis()
         val uid = tool.getCurrentId()
@@ -126,18 +124,18 @@ class ManageFoodFragmentFragment : Fragment() {
         hashMap["id"]="$timestamp"
         hashMap["uid"] = uid
         hashMap["foodname"] = foodname
-        hashMap["description"] = descripton
+        hashMap["description"] = description
         hashMap["price"] = price
         hashMap["category"]= selectedCategoryTitle
         hashMap["timestamp"] = timestamp
         hashMap["buyCount"]=0
         hashMap["numberOfLike"]=0
-        hashMap["imageUrl"]=""
+        hashMap["imageUrl"]="foods/$timestamp"
         Log.i(TAG, "${hashMap}}")
         Log.i(TAG, "$uid")
 
         val ref = FirebaseDatabase.getInstance().getReference("Foods")
-        uploadImgToStorage("$timestamp")
+//        uploadImgToStorage("$timestamp")
         ref.child(timestamp.toString())
             .setValue(hashMap)
             .addOnSuccessListener {
@@ -151,27 +149,26 @@ class ManageFoodFragmentFragment : Fragment() {
             }
 
     }
-    private fun openFileChooser() {
-        val intent = Intent()
-        intent.type= "image/*"
-        intent.action= Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == AppCompatActivity.RESULT_OK && data != null && data.data != null){
-            imgUri = data.data!!
-            Glide.with(imgIv.context)
-                .load(imgUri)
-                .apply(
-                    RequestOptions()
-                        .placeholder(R.drawable.loading_animation)
-                        .error(R.drawable.ic_broken_image))
-                .into(imgIv)
-        }
-    }
-    private var selectedCategoryId = ""
-    private var selectedCategoryTitle = ""
+//    private fun openFileChooser() {
+//        val intent = Intent()
+//        intent.type= "image/*"
+//        intent.action= Intent.ACTION_GET_CONTENT
+//        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+//    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == AppCompatActivity.RESULT_OK && data != null && data.data != null){
+//            imgUri = data.data!!
+//            Glide.with(imgIv.context)
+//                .load(imgUri)
+//                .apply(
+//                    RequestOptions()
+//                        .placeholder(R.drawable.loading_animation)
+//                        .error(R.drawable.ic_broken_image))
+//                .into(imgIv)
+//        }
+//    }
+
     private fun categoryPickDialog(){
         Log.d(TAG, "categoryPickDialog: categoryPickDialog categories")
 
@@ -215,23 +212,21 @@ class ManageFoodFragmentFragment : Fragment() {
 
         })
     }
-    private fun uploadImgToStorage(path: String) {
-        val filePathAndName = "foods/$path"
-        val storageRef = FirebaseStorage.getInstance().getReference(filePathAndName)
-        storageRef.putFile(imgUri!!)
-            .addOnSuccessListener {taskSnapshot ->
-                val uriTask: Task<Uri> = taskSnapshot.storage.downloadUrl
-                while (!uriTask.isSuccessful);
-                val uploadPdfUrl = "${uriTask.result}"
-                val ref = FirebaseDatabase.getInstance().getReference("Foods/$path")
-                ref.child("imageUrl").setValue(uploadPdfUrl)
-                Toast.makeText(this.context, "Updated food!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener{
-                Toast.makeText(this.context, "failed upload img due to ${it.message}", Toast.LENGTH_SHORT).show()
-            }
-
-    }
+//    private fun uploadImgToStorage(path: String) {
+//        val filePathAndName = "foods/$path"
+//        val storageRef = FirebaseStorage.getInstance().getReference(filePathAndName)
+//        storageRef.putFile(imgUri!!)
+//            .addOnSuccessListener {taskSnapshot ->
+//                val uriTask: Task<Uri> = taskSnapshot.storage.downloadUrl
+//                while (!uriTask.isSuccessful);
+//
+//                Toast.makeText(this.context, "Updated food!", Toast.LENGTH_SHORT).show()
+//            }
+//            .addOnFailureListener{
+//                Toast.makeText(this.context, "failed upload img due to ${it.message}", Toast.LENGTH_SHORT).show()
+//            }
+//
+//    }
     companion object {
         /**
          * Use this factory method to create a new instance of
