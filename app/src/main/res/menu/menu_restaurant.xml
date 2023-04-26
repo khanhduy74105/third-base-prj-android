@@ -13,19 +13,20 @@
             />
         <item
             android:id="@+id/nav_favorite"
-            android:title="Manage Food"
-            android:icon="@drawable/ic_favorite"
+            android:title="Manage Category"
+            android:icon="@drawable/baseline_category_24"
             />
         <item
             android:id="@+id/nav_order"
             android:title="Chart"
-            android:icon="@drawable/ic_restaurant"
+            android:icon="@drawable/baseline_bar_chart_24"
             />
         <item
-            android:id="@+id/nav_profile"
+            android:id="@+id/nav_money"
             android:title="Manage Money"
-            android:icon="@drawable/ic_person_white"
+            android:icon="@drawable/baseline_attach_money_24"
             />
+
     </group>
     <group android:checkableBehavior="single">
         <item
