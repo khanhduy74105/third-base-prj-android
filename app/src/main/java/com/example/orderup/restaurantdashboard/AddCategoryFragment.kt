@@ -1,5 +1,4 @@
 package com.example.orderup.restaurantdashboard
-
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -16,12 +15,10 @@ import com.example.orderup.lib.tool
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
  * Use the [AddCategoryFragment.newInstance] factory method to
@@ -31,8 +28,12 @@ class AddCategoryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var progressDialog: ProgressDialog
     private lateinit var binding: FragmentAddCategoryBinding
-
+    private lateinit var categoryEt : TextInputEditText
+    private lateinit var saveBtn: Button
+    val TAG = "Add category"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -40,21 +41,25 @@ class AddCategoryFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentAddCategoryBinding.inflate(inflater,container,  false)
+        firebaseAuth = FirebaseAuth.getInstance()
+        categoryEt = binding.categoryEt
+        progressDialog = ProgressDialog(context)
+        progressDialog.setTitle("Please wait")
+        progressDialog.setCanceledOnTouchOutside(false)
         return  binding.root
     }
     var category =""
     private fun validateData() {
-       category= categoryEt.text.toString().trim()
+        category= categoryEt.text.toString().trim()
         if (category.isEmpty()){
             Toast.makeText(this.context, "Category", Toast.LENGTH_SHORT).show()
         }else{
-           AddCategory()
+            AddCategory()
         }
     }
     private fun AddCategory() {
@@ -68,8 +73,23 @@ class AddCategoryFragment : Fragment() {
         hashMap["timestamp"] = timestamp
         Log.i(TAG, "${hashMap}}")
         Log.i(TAG, "$uid")
-
-
+        // set data to db
+        val ref = FirebaseDatabase.getInstance().getReference("Categorys")
+        ref.child(timestamp.toString())
+            .setValue(hashMap)
+            .addOnSuccessListener {
+                Log.i(TAG, "luu vao DB success")
+                progressDialog.dismiss()
+//                Toast.makeText(this, "creating account successfully", Toast.LENGTH_SHORT).show()
+//                finish()
+                startActivity(Intent(requireContext(), RestaurantDashboardActivity::class.java))
+            }
+            .addOnFailureListener {
+                Log.i(TAG, "luu vao DB that bai")
+                progressDialog.dismiss()
+//                Toast.makeText(this, "Failed creating account due to ${it.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

@@ -90,7 +90,7 @@ class RestaurantDashboardActivity : AppCompatActivity() {
                     }
                     4 -> {
                         bottomNavigationView.menu.findItem(R.id.tag_profile).isChecked = true
-                        navigationView.menu.findItem(R.id.nav_profile).isChecked = true
+                        navigationView.menu.findItem(R.id.nav_money).isChecked = true
                     }
                     3 -> {
                         bottomNavigationView.menu.findItem(R.id.tag_order).isChecked = true

@@ -10,6 +10,7 @@ import com.example.orderup.LoginActivity
 import com.example.orderup.SignUpActivity
 import com.example.orderup.databinding.ActivityWelcomeBinding
 import com.example.orderup.lib.tool
+import com.example.orderup.restaurantdashboard.RestaurantDashboardActivity
 import com.example.orderup.usedashboard.UserDashboardActivity
 import com.facebook.*
 import com.facebook.login.LoginManager

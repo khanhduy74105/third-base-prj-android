@@ -48,7 +48,6 @@
             android:textColor="@color/text_color"
             android:backgroundTint="@color/button_bg_color"
             android:textStyle="bold"
-
             />
         <Button
             android:id="@+id/restaurantsBtn"
