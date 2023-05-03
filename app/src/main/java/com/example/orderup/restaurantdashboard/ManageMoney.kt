@@ -1,11 +1,15 @@
 package com.example.orderup.restaurantdashboard
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.orderup.R
+import android.widget.Button
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.example.orderup.databinding.FragmentManageMoneyBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +25,11 @@ class ManageMoney : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var binding: FragmentManageMoneyBinding
+    private lateinit var viewPager: ViewPager2
+    private lateinit var btnMoney :Button
+    private lateinit var btnOrder :Button
+    private lateinit var btnFood :Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +43,16 @@ class ManageMoney : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentManageMoneyBinding.inflate(inflater,container,  false)
+        btnMoney = binding.moneybtn
+        btnOrder = binding.orderbtn
+        btnFood= binding.foodbtn
+        btnMoney.setOnClickListener {
+            startActivity(Intent(this.context,ChartForMoney::class.java))
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_manage_money, container, false)
+        return binding.root
     }
 
     companion object {

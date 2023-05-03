@@ -1,6 +1,7 @@
 package com.example.orderup.rcvAdapter
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -56,7 +57,22 @@ class OrderResAdapter : RecyclerView.Adapter<OrderResAdapter.HolderView> {
         Log.i("ORDER", timestamp.toString())
         if (model.state == "waiting") {
             holder.status.text = "waiting"
-
+            holder.status.setOnClickListener {
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("Confirm this order?")
+                    .setMessage("Are you sure to order those items")
+                    .setPositiveButton("Confirm"){
+                            a,d ->
+                        Toast.makeText(context, "Confirming...", Toast.LENGTH_SHORT).show()
+                        confirmReceived(model.uid,orderId)
+                    }
+                    .setNegativeButton("Cancel"){
+                            a,d ->
+                        a.dismiss()
+                        cancelOrder(model.uid,orderId)
+                    }
+                    .show()
+            }
         } else if (model.state == "deliving") {
             holder.status.text = "delivering"
         } else if (model.state == "confirmed") {
@@ -65,10 +81,8 @@ class OrderResAdapter : RecyclerView.Adapter<OrderResAdapter.HolderView> {
             holder.status.text = "Cancel"
         }
     }
-
-    private fun confirmReceived(id: String) {
-        val uid = tool.getCurrentId()
-        val ref = FirebaseDatabase.getInstance().getReference("Orders/${uid}/$id")
+    private fun confirmReceived(uidOrder:String,id: String) {
+        val ref = FirebaseDatabase.getInstance().getReference("Orders/${uidOrder}/$id")
         ref.child("state")
             .setValue("confirmed")
             .addOnSuccessListener {
@@ -76,9 +90,8 @@ class OrderResAdapter : RecyclerView.Adapter<OrderResAdapter.HolderView> {
             }
     }
 
-    private fun cancelOrder(id: String) {
-        val uid = tool.getCurrentId()
-        val ref = FirebaseDatabase.getInstance().getReference("Orders/${uid}/$id")
+    private fun cancelOrder(uidOrder:String, id: String) {
+        val ref = FirebaseDatabase.getInstance().getReference("Orders/${uidOrder}/$id")
         ref.child("state")
             .setValue("canceled")
             .addOnSuccessListener {

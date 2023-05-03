@@ -29,82 +29,68 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/foodoption"
+            android:id="@+id/totalMoney"
             android:layout_width="150dp"
             android:layout_height="120dp"
+            android:layout_marginEnd="40dp"
+
+            android:layout_marginBottom="56dp"
             android:background="@drawable/shape_edittext01"
-            android:drawableTop="@drawable/baseline_fastfood_24"
+            android:drawableTop="@drawable/baseline_money_24"
             android:drawablePadding="10dp"
             android:padding="10dp"
-            android:text="Food"
+            android:text="900000$"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/orderoption"
-            app:layout_constraintHorizontal_bias="0.537"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.188" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/orderoption"
+            android:id="@+id/totalOrder"
             android:layout_width="150dp"
             android:layout_height="120dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginBottom="56dp"
             android:background="@drawable/shape_edittext01"
             android:drawableTop="@drawable/baseline_fastfood_24"
+
             android:drawablePadding="10dp"
             android:padding="10dp"
-            android:text=" Order"
-
+            android:text="40 Order"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.831"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.188" />
+            app:layout_constraintEnd_toStartOf="@+id/totalMoney"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/moneyoption"
-            android:layout_width="150dp"
-            android:layout_height="120dp"
-            android:layout_marginEnd="44dp"
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="in month"
+            app:layout_constraintBottom_toBottomOf="@+id/totalOrder"
+            app:layout_constraintEnd_toEndOf="@+id/totalOrder"
+            app:layout_constraintHorizontal_bias="0.604"
+            app:layout_constraintStart_toStartOf="@+id/totalOrder"
+            app:layout_constraintTop_toTopOf="@+id/totalOrder"
+            app:layout_constraintVertical_bias="0.792"
+            tools:ignore="MissingConstraints" />
 
-            android:background="@drawable/shape_edittext01"
-            android:drawableTop="@drawable/baseline_fastfood_24"
-            android:drawablePadding="10dp"
-            android:padding="10dp"
-            android:text="Statistical"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="25dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/orderoption"
-            app:layout_constraintVertical_bias="0.492" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/thongke"
-            android:layout_width="150dp"
-            android:layout_height="120dp"
-            android:background="@drawable/shape_edittext01"
-            android:drawableTop="@drawable/baseline_fastfood_24"
-            android:drawablePadding="10dp"
-            android:padding="10dp"
-
-            android:text="Chart"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="25dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/moneyoption"
-            app:layout_constraintHorizontal_bias="0.537"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/foodoption"
-            app:layout_constraintVertical_bias="0.492" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="in month"
+            app:layout_constraintBottom_toBottomOf="@+id/totalMoney"
+            app:layout_constraintEnd_toEndOf="@+id/totalMoney"
+            app:layout_constraintHorizontal_bias="0.635"
+            app:layout_constraintStart_toStartOf="@+id/totalMoney"
+            app:layout_constraintTop_toTopOf="@+id/totalMoney"
+            app:layout_constraintVertical_bias="0.792"
+            tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

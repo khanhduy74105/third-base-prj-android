@@ -24,7 +24,7 @@ class ViewPagerResAdapter (fragmentManager: FragmentManager, behavior: Int) : Fr
                 return ManageCategory()
             }
             3 -> {
-                return Chart()
+                return ManageMoney()
             }
             4 ->{
                 return ManageMoney()

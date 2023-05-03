@@ -46,17 +46,6 @@ class AboutRestaurantFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentAboutRestaurantBinding.inflate(inflater,container,  false)
-        binding.foodoption.setOnClickListener {
-        }
-        binding.orderoption.setOnClickListener {
-
-        }
-        binding.thongke.setOnClickListener {
-
-        }
-        binding.moneyoption.setOnClickListener {
-
-        }
         sliderShow()
         return binding.root
     }
