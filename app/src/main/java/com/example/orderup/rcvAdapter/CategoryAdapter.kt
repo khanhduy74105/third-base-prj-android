@@ -1,17 +1,21 @@
 package com.example.orderup.rcvAdapter
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.orderup.FoodDetailActivity
 import com.example.orderup.R
+import com.example.orderup.UserSearchActivity
 import com.example.orderup.databinding.RcvCategoryItemColBinding
 import com.example.orderup.model.ModelCategory
 import kotlin.math.nextDown
@@ -54,6 +58,11 @@ class CategoryAdapter: RecyclerView.Adapter<CategoryAdapter.CategoryHolder> {
                     .placeholder(R.drawable.loading_animation)
                     .error(R.drawable.ic_broken_image))
             .into(holder.categoryIv)
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, UserSearchActivity::class.java)
+            intent.putExtra("searchValue", categoryType)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

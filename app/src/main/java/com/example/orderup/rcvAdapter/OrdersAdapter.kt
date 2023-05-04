@@ -58,7 +58,7 @@ class OrdersAdapter : RecyclerView.Adapter<OrdersAdapter.HolderView> {
         val orderId = model.id
         val items = model.items
         val address = model.address
-        val restaurantName = "Bichingling"
+        val restaurantName = "Ordered in ${tool.calculateDiffTime(model.timestamp)}"
         val state = model.state
         val price = model.total
         Log.i("ORDER", timestamp.toString())

@@ -1,49 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="240dp"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="10dp"
-    android:backgroundTint="@color/mainOrange"
     android:layout_marginHorizontal="5dp"
-    >
+    android:backgroundTint="@color/mainOrange"
+    app:cardCornerRadius="10dp">
+
     <RelativeLayout
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="4dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="4dp"
+            >
+
             <ImageView
                 android:id="@+id/restaurantIv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:maxHeight="100dp"
-                android:src="@drawable/welcome_bg"
-                android:scaleType="fitXY"
+                android:layout_height="140dp"
                 android:adjustViewBounds="true"
-                />
-            <TextView
-                android:id="@+id/resNameTv"
+                android:scaleType="centerCrop"
+                android:src="@drawable/welcome_bg" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nha hang michilin"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                />
-            <TextView
-                android:id="@+id/shortDescriptionTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nha hang vip"
-                />
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                />
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:paddingHorizontal="6dp"
+                >
+
+                <TextView
+                    android:id="@+id/resNameTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nha hang michilin"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/shortDescriptionTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This is description" />
+
+                <TextView
+                    android:id="@+id/addressTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nha hang vip" />
+            </LinearLayout>
 
         </LinearLayout>
     </RelativeLayout>

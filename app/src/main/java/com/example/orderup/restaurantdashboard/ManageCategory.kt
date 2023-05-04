@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.orderup.R
 import com.example.orderup.databinding.FragmentManageCategoryBinding
+import com.example.orderup.lib.tool
 import com.example.orderup.model.ModelCategory
 import com.example.orderup.rcvAdapter.CategorysAdapter
 import com.example.orderup.restaurantdashboard.ui.ManageFoodFragmentFragment
@@ -123,7 +124,7 @@ class ManageCategory : Fragment() {
     private fun AddCategory() {
         progressDialog.setMessage("Saving....")
         val timestamp = System.currentTimeMillis()
-        val uid = firebaseAuth.uid!!
+        val uid = tool.getCurrentId()
         val hashMap: HashMap<String, Any?> =  HashMap()
         hashMap["id"]="$timestamp"
         hashMap["uid"] = uid
