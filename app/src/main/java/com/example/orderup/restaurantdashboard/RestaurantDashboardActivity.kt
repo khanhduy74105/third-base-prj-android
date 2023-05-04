@@ -12,7 +12,6 @@ import androidx.viewpager.widget.ViewPager
 import com.example.orderup.LoginActivity
 import com.example.orderup.R
 import com.example.orderup.databinding.ActivityRestaurantDashboardBinding
-import com.example.orderup.usedashboard.ViewPageAdapter
 import com.example.orderup.welcome.WelcomeActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -90,7 +89,7 @@ class RestaurantDashboardActivity : AppCompatActivity() {
                     }
                     4 -> {
                         bottomNavigationView.menu.findItem(R.id.tag_profile).isChecked = true
-                        navigationView.menu.findItem(R.id.nav_profile).isChecked = true
+                        navigationView.menu.findItem(R.id.nav_money).isChecked = true
                     }
                     3 -> {
                         bottomNavigationView.menu.findItem(R.id.tag_order).isChecked = true
