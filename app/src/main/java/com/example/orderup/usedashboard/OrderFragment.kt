@@ -7,19 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.core.view.ViewCompat.setBackgroundTintList
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.orderup.R
 import com.example.orderup.databinding.FragmentOrderBinding
 import com.example.orderup.model.ModelOrder
-import com.example.orderup.modelview.CartViewModel
 import com.example.orderup.modelview.OrderViewModel
-import com.example.orderup.rcvAdapter.FoodsCartAdapter
 import com.example.orderup.rcvAdapter.OrdersAdapter
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

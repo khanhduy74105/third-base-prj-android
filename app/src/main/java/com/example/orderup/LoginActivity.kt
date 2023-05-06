@@ -75,6 +75,7 @@ class LoginActivity : AppCompatActivity() {
                 checkUser()
             }
             .addOnFailureListener {
+                progressDialog.dismiss()
                 Log.i(TAG,"dang ki that bai ${it.message}")
                 Toast.makeText(this, "Login faileure due to ${it.message}",Toast.LENGTH_SHORT)
             }
@@ -83,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
     private fun checkUser() {
         progressDialog.setMessage("Checking user")
         val uid = firebaseAuth.currentUser!!.uid
-        tool.setCurrentId(uid)
+        Log.i(TAG,"$uid")
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.child(uid)
             .addListenerForSingleValueEvent(object : ValueEventListener {

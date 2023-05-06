@@ -32,7 +32,8 @@ class OrderViewModel: ViewModel {
             .addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val cartItems = ArrayList<ModelOrder>()
-                for (ds in snapshot.children) {
+                val reversedList = snapshot.children.reversed()
+                for (ds in reversedList) {
                     val model = ds.getValue(ModelOrder::class.java)
                     if (model != null) {
                         cartItems.add(model)

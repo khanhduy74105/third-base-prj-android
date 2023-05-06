@@ -53,9 +53,9 @@ class FoodsCartAdapter(
 
     override fun onBindViewHolder(holder: HolderFood, position: Int) {
         val model = cartItemArraylist[position]
-        holder.priceTv.text = model.price
+        holder.priceTv.text = "${model.price} vnd"
         holder.foodNameTv.text = model.foodname
-        holder.amountFoodTv.text = "${model.amount} vnd"
+        holder.amountFoodTv.text = "${model.amount}"
         holder.amount = model.amount
         val imgUri = model.imageUrl.toUri().buildUpon().scheme("https").build()
         Glide.with(holder.foodIv.context)
@@ -108,13 +108,6 @@ class FoodsCartAdapter(
         val ref = FirebaseDatabase.getInstance().getReference("Cart/$uid")
         ref.child("$itemId/amount")
             .setValue(amount)
-            .addOnSuccessListener {
-                Toast.makeText(context, "changed $amount", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "change failed", Toast.LENGTH_SHORT).show()
-
-            }
     }
 
 

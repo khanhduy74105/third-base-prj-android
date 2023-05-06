@@ -188,7 +188,6 @@ class ManageFoodFragmentFragment : Fragment() {
                     dialog, which ->
                 selectedCategoryTitle = categoryArraylist[which].category
                 selectedCategoryId = categoryArraylist[which].id
-
                 binding.categoryTv.text = selectedCategoryTitle
                 Log.d(TAG, "categoryPickDialog id: $selectedCategoryId")
                 Log.d(TAG, "categoryPickDialog title: $selectedCategoryTitle")
