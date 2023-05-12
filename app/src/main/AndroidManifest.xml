@@ -16,6 +16,9 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".restaurantdashboard.ChartForOrder"
+            android:exported="false" />
+        <activity
             android:name=".restaurantdashboard.ChartForMoney"
             android:exported="false" />
         <activity
