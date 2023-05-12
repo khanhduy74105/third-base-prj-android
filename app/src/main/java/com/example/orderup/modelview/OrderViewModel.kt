@@ -28,7 +28,8 @@ class OrderViewModel: ViewModel {
     fun initCartItems() {
         val uid = tool.getCurrentId()
         val ref = FirebaseDatabase.getInstance().getReference("Orders/$uid")
-        ref.addValueEventListener(object : ValueEventListener {
+        ref.orderByChild("timestamp")
+            .addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val cartItems = ArrayList<ModelOrder>()
                 for (ds in snapshot.children) {
