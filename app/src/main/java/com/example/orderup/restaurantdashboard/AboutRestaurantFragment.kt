@@ -41,12 +41,12 @@ class AboutRestaurantFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding: FragmentAboutRestaurantBinding
-    private lateinit var viewPager :ViewPager2
-    private lateinit var moneyTv :TextView
-    private lateinit var orderTv :TextView
+    private lateinit var viewPager: ViewPager2
+    private lateinit var moneyTv: TextView
+    private lateinit var orderTv: TextView
     private lateinit var usersUid: ArrayList<String>
     var totalMoney = 0.0
-    var totalOrder =0
+    var totalOrder = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -60,60 +60,131 @@ class AboutRestaurantFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentAboutRestaurantBinding.inflate(inflater,container,  false)
+        binding = FragmentAboutRestaurantBinding.inflate(inflater, container, false)
         moneyTv = binding.totalMoney
         orderTv = binding.totalOrder
-        moneyTv.text=totalMoney.toString()
-        orderTv.text=totalOrder.toString()
-        sliderShow()
-        return binding.root
-    }
-    fun getUser(){
-        usersUid =ArrayList()
+        usersUid = ArrayList()
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for(ds in snapshot.children){
+                for (ds in snapshot.children) {
                     val model = ds.child("uid").value.toString()
                     usersUid.add(model)
                 }
-                getData(usersUid)
+                for (i in 1..usersUid.size) {
+                    val ref =
+                        FirebaseDatabase.getInstance().getReference("Orders/${usersUid[i - 1]}")
+                    ref.addValueEventListener(object : ValueEventListener {
+                        @RequiresApi(Build.VERSION_CODES.O)
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            for (ds in snapshot.children) {
+                                val model = ds.getValue(ModelOrder::class.java)
+                                val currentMonthNumber: Int = LocalDate.now().monthValue -1
+                                Log.i("about", currentMonthNumber.toString())
+                                val month = model?.let { changeTimestampToMonth(it.timestamp) }
+                                Log.i("about", month.toString())
+                                if(month == currentMonthNumber){
+                                    if(model.state=="confirmed"){
+                                        totalMoney+=model.total
+                                        totalOrder+=1
+                                    }
+                                }
+                                moneyTv.text = totalMoney.toString()
+                                orderTv.text = totalOrder.toString()
+                            }
+
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
         })
+        sliderShow()
+        return binding.root
+    }
+    private fun changeTimestampToMonth(timestamp:Long):Int{
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = timestamp
+        val month = calendar.get(Calendar.MONTH)
+        return month
+    }
+        fun getUser(){
+//        usersUid =ArrayList()
+//        val ref = FirebaseDatabase.getInstance().getReference("Users")
+//        ref.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                for(ds in snapshot.children){
+//                    val model = ds.child("uid").value.toString()
+//                    usersUid.add(model)
+//                }
+//                for (i in 1.. usersUid.size) {
+//                    val ref = FirebaseDatabase.getInstance().getReference("Orders/${usersUid[i-1]}")
+//                    ref.addValueEventListener(object : ValueEventListener {
+//                        @RequiresApi(Build.VERSION_CODES.O)
+//                        override fun onDataChange(snapshot: DataSnapshot) {
+//                            for (ds in snapshot.children) {
+//                                val model = ds.getValue(ModelOrder::class.java)
+//                                if (model != null) {
+//                                    if(model.state=="confirmed"){
+//                                        totalOrder+=1
+//                                        totalMoney+=model.total
+//                                    }
+//                                }
+//                                moneyTv.text=totalMoney.toString()
+//                                orderTv.text=totalOrder.toString()
+//                            }
+//
+//                        }
+//                        override fun onCancelled(error: DatabaseError) {
+//                            TODO("Not yet implemented")
+//                        }
+//
+//                    })
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//        })
     }
 
     fun getData(usersUid:ArrayList<String>) {
-        for (i in 1.. usersUid.size) {
-            val ref = FirebaseDatabase.getInstance().getReference("Orders/${usersUid[i-1]}")
-            ref.addValueEventListener(object : ValueEventListener {
-                @RequiresApi(Build.VERSION_CODES.O)
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (ds in snapshot.children) {
-                        val model = ds.getValue(ModelOrder::class.java)
-                        if (model != null) {
-                            if(model.state=="confirmed"){
-                                totalOrder+=1
-                                totalMoney+=model.total
-                            }
-                        }
-                        moneyTv.text=totalMoney.toString()
-                        orderTv.text=totalOrder.toString()
-                    }
-
-                }
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-        }
+//        for (i in 1.. usersUid.size) {
+//            val ref = FirebaseDatabase.getInstance().getReference("Orders/${usersUid[i-1]}")
+//            ref.addValueEventListener(object : ValueEventListener {
+//                @RequiresApi(Build.VERSION_CODES.O)
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    for (ds in snapshot.children) {
+//                        val model = ds.getValue(ModelOrder::class.java)
+//                        if (model != null) {
+//                            if(model.state=="confirmed"){
+//                                totalOrder+=1
+//                                totalMoney+=model.total
+//                            }
+//                        }
+//                        moneyTv.text=totalMoney.toString()
+//                        orderTv.text=totalOrder.toString()
+//                    }
+//
+//                }
+//                override fun onCancelled(error: DatabaseError) {
+//                    TODO("Not yet implemented")
+//                }
+//
+//            })
+//        }
     }
-    fun sliderShow(){
-        viewPager=binding.viewPager
+    fun sliderShow() {
+        viewPager = binding.viewPager
         val images = listOf(
             R.drawable.item_slider1,
             R.drawable.item_slider2,
@@ -138,6 +209,7 @@ class AboutRestaurantFragment : Fragment() {
             }
         }, 3000, 3000)
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of

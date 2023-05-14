@@ -31,7 +31,6 @@ class ChartForOrder : AppCompatActivity() {
     private lateinit var btnBack : ImageButton
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var usersUid: ArrayList<String>
-    private lateinit var listData: ArrayList<PieEntry>
     var confirmOrder = 0
     var cancelOrder = 0
     var waitingOrder = 0
@@ -41,21 +40,63 @@ class ChartForOrder : AppCompatActivity() {
         pieChart= binding.pieChart
         btnBack = binding.backBtn
         usersUid = ArrayList()
-        listData = ArrayList()
-        getUser()
-        listData.add(PieEntry( 100f,"confirm" ))
-        listData.add(PieEntry(  100f,"cancel" ))
-        listData.add(PieEntry(  100f,"waiting" ))
-        val pieDataSet = PieDataSet(listData,"list")
-        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS,255)
-        pieDataSet.valueTextColor = Color.BLACK
-        pieDataSet.valueTextSize=30f
-        val pieData = PieData(pieDataSet)
-        pieChart.centerText="Number of Order"
-        pieChart.description.isEnabled=true
-        pieChart.animate()
+        val ref = FirebaseDatabase.getInstance().getReference("Users")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (ds in snapshot.children) {
+                    val model = ds.child("uid").value.toString()
+                    usersUid.add(model)
+                }
+                for (i in 1..usersUid.size) {
+                    val ref =
+                        FirebaseDatabase.getInstance().getReference("Orders/${usersUid[i - 1]}")
+                    ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                        @RequiresApi(Build.VERSION_CODES.O)
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val listData = mutableListOf<PieEntry>()
+                            for (ds in snapshot.children) {
+                                val model = ds.getValue(ModelOrder::class.java)
+                                val currentMonthNumber: Int = LocalDate.now().monthValue -2
+                                val month = model?.let { changeTimestampToMonth(it.timestamp) }
+                                if(month == currentMonthNumber){
+                                    if(model.state=="confirmed"){
+                                        confirmOrder+=1
+                                    } else if(model.state =="waiting"){
+                                        waitingOrder+=1
+                                    }else if (model.state=="cancel"){
+                                        cancelOrder+=1
+                                    }
+                                }
+                            }
+                            Log.i("order",confirmOrder.toString())
+                            Log.i("order",cancelOrder.toString())
+                            Log.i("order",waitingOrder.toString())
+                            listData.add(PieEntry(confirmOrder.toFloat(),"confirm" ))
+                            listData.add(PieEntry(cancelOrder.toFloat(),"cancel" ))
+                            listData.add(PieEntry(waitingOrder.toFloat(),"waiting" ))
+                            val pieDataSet = PieDataSet(listData,"list")
+                            pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS,255)
+                            pieDataSet.valueTextColor = Color.BLACK
+                            pieDataSet.valueTextSize=16f
+                            val pieData = PieData(pieDataSet)
+                            pieChart.centerText="Number of Order"
+                            pieChart.description.isEnabled=true
+                            pieChart.animate()
+                            pieChart.data = pieData
+                            pieChart.invalidate()
+                        }
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
 
-        pieChart.data = pieData
+                    })
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
         btnBack.setOnClickListener {
             startActivity(Intent(this,RestaurantDashboardActivity::class.java))
         }
@@ -67,71 +108,6 @@ class ChartForOrder : AppCompatActivity() {
         val month = calendar.get(Calendar.MONTH)
         return month
     }
-    fun getUser(){
-        usersUid =ArrayList()
-        val ref = FirebaseDatabase.getInstance().getReference("Users")
-        ref.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for(ds in snapshot.children){
-                    val model = ds.child("uid").value.toString()
-                    usersUid.add(model)
-                }
-                getData(usersUid)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-    }
-    fun getData(usersUid:ArrayList<String>) {
-        for (i in 1.. usersUid.size) {
-            val ref = FirebaseDatabase.getInstance().getReference("Orders/${usersUid[i-1]}")
-            ref.addValueEventListener(object : ValueEventListener {
-                @RequiresApi(Build.VERSION_CODES.O)
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (ds in snapshot.children) {
-                        val model = ds.getValue(ModelOrder::class.java)
-                        if (model != null) {
-                            val currentMonthNumber: Int = LocalDate.now().monthValue -2
-                            Log.i("confirmCurrentMonth",currentMonthNumber.toString())
-                            val month = changeTimestampToMonth(model.timestamp)
-                            Log.i("confirmMonth",month.toString())
-                            if(month == currentMonthNumber){
-                                if(model.state=="confirmed"){
-                                    confirmOrder+=1
-                                } else if(model.state =="waiting"){
-                                    waitingOrder+=1
-                                }else if (model.state=="cancel"){
-                                    cancelOrder+=1
-                                }
-                            }
-                           Log.i("confirm",confirmOrder.toString())
-                        }
-                    }
-                    updateChart()
-
-                }
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-        }
-    }
-    fun updateChart(){
-        listData.clear()
-        listData = ArrayList()
-        listData.add(PieEntry( confirmOrder.toFloat(),"confirm" ))
-        listData.add(PieEntry(  cancelOrder.toFloat(),"cancel" ))
-        listData.add(PieEntry(  waitingOrder.toFloat(),"waiting" ))
-        val pieDataSet = PieDataSet(listData,"list")
-        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS,255)
-        pieDataSet.valueTextColor = Color.BLACK
-        val pieData = PieData(pieDataSet)
-        pieChart.centerText="Number of Order"
-        pieChart.animate()
-        pieChart.data = pieData
-    }
 }
+
 

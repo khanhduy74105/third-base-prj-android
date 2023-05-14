@@ -2,6 +2,7 @@ package com.example.orderup.restaurantdashboard
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +16,16 @@ import com.example.orderup.databinding.FragmentAboutRestaurantBinding
 import com.example.orderup.databinding.FragmentInfoRestaurantBinding
 import com.example.orderup.model.ModalUser
 import com.example.orderup.model.ModelOrder
+import com.example.orderup.model.ModelRestaurant
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +42,7 @@ class InfoRestaurant : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding: FragmentInfoRestaurantBinding
-
+    private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -48,39 +55,46 @@ class InfoRestaurant : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        firebaseAuth = FirebaseAuth.getInstance()
         binding = FragmentInfoRestaurantBinding.inflate(inflater,container,  false)
-        val ref = FirebaseDatabase.getInstance().getReference("Userrs/")
-        ref.addValueEventListener(object : ValueEventListener {
+        val ref = FirebaseDatabase.getInstance().getReference("Restaurant/")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (ds in snapshot.children) {
-                    val model = ds.getValue(ModalUser::class.java)
+                    val model = ds.getValue(ModelRestaurant::class.java)
                     if (model != null) {
-                        val imageUrl = model.profileImage
-                        val imgUri = imageUrl.toUri().buildUpon().scheme("https").build()
-                        if(model.userType=="owner"){
-                           Glide.with(binding.imgInfoRes.context)
-                               .load(imgUri)
-                               .centerCrop()
-                               .apply(
-                                   RequestOptions()
-                                       .placeholder(R.drawable.loading_animation)
-                                       .error(R.drawable.ic_broken_image))
-                               .into(binding.imgInfoRes)
-                            binding.nameRes.text = model.username
-                            binding.address.text = model.address
-                       }
+                        Log.i("res",model.name)
+                        binding.nameRes.text = model.name
+                        binding.dayStart.text = changeTimestampToDate(model.timestamp)
+                        binding.address.text = model.address
+                            val imageUrl = model.image
+                            val imgUri = imageUrl.toUri().buildUpon().scheme("https").build()
+                            Glide.with(binding.imgInfoRes.context)
+                                .load(imgUri)
+                                .centerCrop()
+                                .apply(
+                                    RequestOptions()
+                                        .placeholder(R.drawable.loading_animation)
+                                        .error(R.drawable.ic_broken_image))
+                                .into(binding.imgInfoRes)
+
                     }
                 }
-
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
         })
-        return inflater.inflate(R.layout.fragment_info_restaurant, container, false)
+        return binding.root
     }
-
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun changeTimestampToDate(timestamp: Long): String {
+        val localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        return localDateTime.format(formatter)
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
