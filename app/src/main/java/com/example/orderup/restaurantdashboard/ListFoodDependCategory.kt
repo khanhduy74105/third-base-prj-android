@@ -30,7 +30,6 @@ class ListFoodDependCategory : AppCompatActivity() {
         loadFoods(binding.root)
         val intent = intent
         nameCategory = intent.getStringExtra("categoryName")!!
-        Log.i("NameCategory", "$nameCategory")
         binding.button.setOnClickListener{
             val fragment = ManageFoodFragmentFragment()
             supportFragmentManager.beginTransaction()

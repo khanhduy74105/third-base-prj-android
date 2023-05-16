@@ -4,20 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".restaurantdashboard.ChartForMoney">
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
+    tools:context=".restaurantdashboard.ChartForOrder">
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintHeight_percent="0.8"
-        >
+        android:layout_height="match_parent">
 
-    </com.github.mikephil.charting.charts.BarChart>
-
+    </com.github.mikephil.charting.charts.PieChart>
     <ImageButton
         android:id="@+id/backBtn"
-        android:layout_width="55dp"
-        android:layout_height="56dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_weight="1"
         android:background="@drawable/shape_button02"
         android:padding="4dp"

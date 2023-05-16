@@ -27,7 +27,7 @@ class ViewPagerResAdapter (fragmentManager: FragmentManager, behavior: Int) : Fr
                 return ManageMoney()
             }
             4 ->{
-                return ManageMoney()
+                return InfoRestaurant()
             }
             else -> {
                 return AboutRestaurantFragment()

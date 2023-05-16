@@ -8,11 +8,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.ViewModelProvider
+import com.example.orderup.R
 import com.example.orderup.databinding.ActivityChartForMoneyBinding
+import com.example.orderup.databinding.ActivityChartForOrderBinding
 import com.example.orderup.model.ModelOrder
-import com.example.orderup.modelview.ChartForMoneyViewModel
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.auth.FirebaseAuth
@@ -24,19 +25,19 @@ import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ChartForMoney : AppCompatActivity() {
-    private  lateinit var binding: ActivityChartForMoneyBinding
-    private lateinit var barChart : BarChart
+class ChartForOrder : AppCompatActivity() {
+    private  lateinit var binding: ActivityChartForOrderBinding
+    private lateinit var pieChart : PieChart
     private lateinit var btnBack : ImageButton
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var usersUid: ArrayList<String>
-
-    private lateinit var moneyViewModel: ChartForMoneyViewModel
-    var listMoneyMonth = arrayOf(0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L)
+    var confirmOrder = 0
+    var cancelOrder = 0
+    var waitingOrder = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityChartForMoneyBinding.inflate(layoutInflater)
-        barChart = binding.barChart
+        binding =ActivityChartForOrderBinding.inflate(layoutInflater)
+        pieChart= binding.pieChart
         btnBack = binding.backBtn
         usersUid = ArrayList()
         val ref = FirebaseDatabase.getInstance().getReference("Users")
@@ -50,28 +51,39 @@ class ChartForMoney : AppCompatActivity() {
                     val ref =
                         FirebaseDatabase.getInstance().getReference("Orders/${usersUid[i - 1]}")
                     ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                        @RequiresApi(Build.VERSION_CODES.O)
                         override fun onDataChange(snapshot: DataSnapshot) {
-                            val listData = mutableListOf<BarEntry>()
+                            val listData = mutableListOf<PieEntry>()
                             for (ds in snapshot.children) {
                                 val model = ds.getValue(ModelOrder::class.java)
-                                if (model != null) {
+                                val currentMonthNumber: Int = LocalDate.now().monthValue -2
+                                val month = model?.let { changeTimestampToMonth(it.timestamp) }
+                                if(month == currentMonthNumber){
                                     if(model.state=="confirmed"){
-                                        var month = changeTimestampToMonth(model.timestamp)
-                                       listMoneyMonth[month] += model.total
+                                        confirmOrder+=1
+                                    } else if(model.state =="waiting"){
+                                        waitingOrder+=1
+                                    }else if (model.state=="cancel"){
+                                        cancelOrder+=1
                                     }
                                 }
                             }
-                            for(i in 1 .. 12){
-                                Log.i("money",listMoneyMonth[i-1].toString())
-                                listData.add(BarEntry( i.toFloat() ,listMoneyMonth[i-1].toFloat()))
-                            }
-                            val barDataset = BarDataSet(listData,"list")
-                            barDataset.setColors(ColorTemplate.MATERIAL_COLORS,255)
-                            barDataset.valueTextColor = Color.BLACK
-                            val barData = BarData(barDataset)
-                            barChart.setFitBars(true)
-                            barChart.data = barData
-                            barChart.invalidate()
+                            Log.i("order",confirmOrder.toString())
+                            Log.i("order",cancelOrder.toString())
+                            Log.i("order",waitingOrder.toString())
+                            listData.add(PieEntry(confirmOrder.toFloat(),"confirm" ))
+                            listData.add(PieEntry(cancelOrder.toFloat(),"cancel" ))
+                            listData.add(PieEntry(waitingOrder.toFloat(),"waiting" ))
+                            val pieDataSet = PieDataSet(listData,"list")
+                            pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS,255)
+                            pieDataSet.valueTextColor = Color.BLACK
+                            pieDataSet.valueTextSize=16f
+                            val pieData = PieData(pieDataSet)
+                            pieChart.centerText="Number of Order"
+                            pieChart.description.isEnabled=true
+                            pieChart.animate()
+                            pieChart.data = pieData
+                            pieChart.invalidate()
                         }
                         override fun onCancelled(error: DatabaseError) {
                             TODO("Not yet implemented")
@@ -84,12 +96,12 @@ class ChartForMoney : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
         })
+
         btnBack.setOnClickListener {
             startActivity(Intent(this,RestaurantDashboardActivity::class.java))
         }
         setContentView(binding.root)
     }
-
     private fun changeTimestampToMonth(timestamp:Long):Int{
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = timestamp
@@ -97,3 +109,5 @@ class ChartForMoney : AppCompatActivity() {
         return month
     }
 }
+
+
