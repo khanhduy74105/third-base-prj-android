@@ -2,6 +2,7 @@ package com.example.orderup.rcvAdapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.example.orderup.R
 import com.example.orderup.databinding.RcvOrderItemsBinding
 import com.example.orderup.lib.tool
 import com.example.orderup.model.ModelOrder
+import com.example.orderup.usedashboard.DetailOrderActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -67,6 +69,9 @@ class OrdersAdapter : RecyclerView.Adapter<OrdersAdapter.HolderView> {
         holder.itemsCountTv.text = "${items.size} items"
         holder.stateOrderTv.text = state.capitalize()
         holder.preiceOrderTv.text = price.toString()
+        holder.itemView.setOnClickListener {
+            toDetailOrder(model.id)
+        }
         if (model.state == "waiting") {
             holder.doneTabLl.visibility = View.INVISIBLE
             holder.imgStateIv.setImageResource(R.drawable.waiting)
@@ -98,6 +103,12 @@ class OrdersAdapter : RecyclerView.Adapter<OrdersAdapter.HolderView> {
             holder.imgStateIv.setImageResource(R.drawable.canceled)
             holder.stateOrderTv.setTextColor(ContextCompat.getColor(context, R.color.red))
         }
+    }
+
+    private fun toDetailOrder(id: String) {
+        val intent = Intent(context, DetailOrderActivity::class.java)
+        intent.putExtra("orderId", id)
+        context.startActivity(intent)
     }
 
     private fun confirmReceived(id: String) {

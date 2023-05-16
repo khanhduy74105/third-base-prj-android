@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.orderup.lib.tool
+import com.example.orderup.model.ModalUser
 import com.example.orderup.model.ModelCartItem
 import com.example.orderup.model.ModelFood
 import com.google.firebase.database.DataSnapshot
@@ -17,9 +18,13 @@ class FavoriteViewModel : ViewModel {
         MutableLiveData<ArrayList<ModelFood>>()
     val favFoodItemArraylist: LiveData<ArrayList<ModelFood>>
         get() = _favFoodItemArraylist
-
+    private var _favRestaurantArraylist: MutableLiveData<ArrayList<ModalUser>> =
+        MutableLiveData<ArrayList<ModalUser>>()
+    val favRestaurantArraylist: LiveData<ArrayList<ModalUser>>
+        get() = _favRestaurantArraylist
     init {
         initFavItems()
+        loadRestaurants()
     }
 
     private fun initFavItems() {
@@ -41,6 +46,43 @@ class FavoriteViewModel : ViewModel {
                                 }
                                 _favFoodItemArraylist.value = items
 
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+
+                        })
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+
+    }
+
+     fun loadRestaurants(){
+        val uid = tool.getCurrentId()
+
+        val ref1 = FirebaseDatabase.getInstance().getReference("Favorites/$uid/restaurants")
+        ref1.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = ArrayList<ModalUser>()
+                for (ds in snapshot.children) {
+                    val restaurantId = ds.key.toString()
+                    val refss = FirebaseDatabase.getInstance().getReference("Users")
+                    refss.child(restaurantId)
+                        .addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                val model = snapshot.getValue(ModalUser::class.java)
+                                if (model != null ){
+                                    list.add(model)
+                                }
+                                _favRestaurantArraylist.postValue(list)
                             }
 
                             override fun onCancelled(error: DatabaseError) {

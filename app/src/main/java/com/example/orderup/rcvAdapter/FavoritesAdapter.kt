@@ -20,7 +20,6 @@ import com.example.orderup.modelview.FavoriteViewModel
 
 class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.HolderFood> {
     private lateinit var binding: RcvFavoriteItemsBinding
-
     private var context: Context
     public var foodsArraylist: ArrayList<ModelFood>
     private val viewModel: FavoriteViewModel
@@ -52,7 +51,6 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.HolderFood> {
     private fun toDetailFood(foodId: String) {
         val intent = Intent(context, FoodDetailActivity::class.java)
         intent.putExtra("foodId", foodId)
-
         context.startActivity(intent)
     }
 

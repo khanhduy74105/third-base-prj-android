@@ -20,6 +20,7 @@ import com.example.orderup.databinding.RcvCategoryItemColBinding
 import com.example.orderup.databinding.RcvRestaurantCarditemColBinding
 import com.example.orderup.model.ModalUser
 import com.example.orderup.model.ModelCategory
+import com.example.orderup.usedashboard.RestaurantDetailActivity
 import kotlin.math.nextDown
 import kotlin.math.roundToInt
 
@@ -27,7 +28,7 @@ class RestaurantAdapter: RecyclerView.Adapter<RestaurantAdapter.CategoryHolder> 
     private lateinit var binding:RcvRestaurantCarditemColBinding
 
     private var context: Context
-    public var restaurantArraylist: ArrayList<ModalUser>
+    private var restaurantArraylist: ArrayList<ModalUser>
 
     constructor(context: Context, restaurantArraylist: ArrayList<ModalUser>) {
         this.context = context
@@ -48,7 +49,6 @@ class RestaurantAdapter: RecyclerView.Adapter<RestaurantAdapter.CategoryHolder> 
 
     override fun onBindViewHolder(holder: CategoryHolder, position: Int) {
         val model = restaurantArraylist[position]
-
         holder.restaurantTv.text = model.username
         holder.addressTv.text = model.address
         val imageUrl = model.profileImage
@@ -61,12 +61,20 @@ class RestaurantAdapter: RecyclerView.Adapter<RestaurantAdapter.CategoryHolder> 
                     .placeholder(R.drawable.loading_animation)
                     .error(R.drawable.ic_broken_image))
             .into(holder.restaurantIv)
+
+        holder.itemView.setOnClickListener {
+            toDetailRestaurant(model.uid)
+        }
     }
 
     override fun getItemCount(): Int {
         return restaurantArraylist.size
     }
 
-
+    private fun toDetailRestaurant( restaurantId: String) {
+        val intent = Intent(context, RestaurantDetailActivity::class.java)
+        intent.putExtra("restaurantId", restaurantId)
+        context.startActivity(intent)
+    }
 
 }

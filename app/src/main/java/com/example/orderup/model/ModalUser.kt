@@ -5,6 +5,7 @@ class ModalUser {
     var email:String = ""
     var username:String = ""
     var timestamp:Long = 0
+    var likes:Long? = 0
     var profileImage:String = ""
     var userType:String = ""
     var address:String = ""
@@ -15,6 +16,7 @@ class ModalUser {
         email: String,
         username: String,
         timestamp: Long,
+        likes: Long,
         profileImage: String,
         userType: String,
         address: String,
@@ -24,6 +26,7 @@ class ModalUser {
         this.email = email
         this.username = username
         this.timestamp = timestamp
+        this.likes = likes
         this.profileImage = profileImage
         this.userType = userType
         this.address = address

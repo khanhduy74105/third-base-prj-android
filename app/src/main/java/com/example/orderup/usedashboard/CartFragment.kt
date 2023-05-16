@@ -94,6 +94,7 @@ class CartFragment : Fragment() {
     private var total: Long = 0
     private var delivery: Long = 0
     private fun fillPrice() {
+        total = 0
         subTotal = 0
         for (model in cartItemArraylist){
             subTotal += (model.price.toLong() * model.amount)

@@ -1,5 +1,6 @@
 package com.example.orderup.rcvAdapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -51,6 +52,7 @@ class FoodsCartAdapter(
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: HolderFood, position: Int) {
         val model = cartItemArraylist[position]
         holder.priceTv.text = "${model.price} vnd"
@@ -85,6 +87,8 @@ class FoodsCartAdapter(
         }
         holder.removeBtn.setOnClickListener {
             removeItem(model.id)
+            viewModel.reloadCartItems()
+            notifyDataSetChanged()
         }
 
     }
@@ -92,11 +96,11 @@ class FoodsCartAdapter(
     private fun removeItem(itemId: String) {
         val uid = tool.getCurrentId()
         val ref = FirebaseDatabase.getInstance().getReference("Cart/$uid")
-            ref.child(itemId)
-                .removeValue()
-                .addOnSuccessListener {
-                    Toast.makeText(this.context, "Removed out!", Toast.LENGTH_SHORT).show()
-                }
+        ref.child(itemId)
+            .removeValue()
+            .addOnSuccessListener {
+                Toast.makeText(this.context, "Removed out!", Toast.LENGTH_SHORT).show()
+            }
     }
 
     override fun getItemCount(): Int {
@@ -109,8 +113,6 @@ class FoodsCartAdapter(
         ref.child("$itemId/amount")
             .setValue(amount)
     }
-
-
 
 
 }

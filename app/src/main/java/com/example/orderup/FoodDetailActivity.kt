@@ -33,7 +33,7 @@ class FoodDetailActivity : AppCompatActivity() {
     private lateinit var commentViewModel: CommentViewModel
     private var amount = 1
     private lateinit var model: ModelFood
-    var currentUderId:String = ""
+    var currentUserId:String = ""
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +43,7 @@ class FoodDetailActivity : AppCompatActivity() {
         val intent = intent
         foodId = intent.getStringExtra("foodId")!!
         binding.amountFoodTv.text = amount.toString()
-        currentUderId = tool.getCurrentId()
+        currentUserId = tool.getCurrentId()
         binding.backBtn.setOnClickListener {
             onBackPressed()
         }
@@ -62,17 +62,17 @@ class FoodDetailActivity : AppCompatActivity() {
         loadComments(foodId)
         binding.addBtn.setOnClickListener {
 
-            if (currentUderId!= "") onAddToCart()
+            if (currentUserId!= "") onAddToCart()
         }
         binding.favBtn.setOnClickListener {
-            if (currentUderId!= "") {
+            if (currentUserId!= "") {
                 changeFavState(it)
             }else{
-                Toast.makeText(this, "You need login first!", Toast.LENGTH_SHORT)
+                Toast.makeText(this, "You need login first!", Toast.LENGTH_SHORT).show()
             }
         }
         binding.commentTv.setOnClickListener {
-            if (currentUderId!= "") {
+            if (currentUserId!= "") {
                 val newintent = Intent(this,CommentActivity::class.java)
                 newintent.putExtra("foodId", model.id)
                 startActivity(newintent)

@@ -1,6 +1,7 @@
 package com.example.orderup.usedashboard
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +9,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
 import com.example.orderup.databinding.FragmentFavoriteBinding
+import com.example.orderup.lib.tool
+import com.example.orderup.model.ModalUser
 import com.example.orderup.model.ModelFood
 import com.example.orderup.modelview.FavoriteViewModel
 import com.example.orderup.rcvAdapter.FavoritesAdapter
 import com.example.orderup.rcvAdapter.FoodsAdapter
+import com.example.orderup.rcvAdapter.RestaurantAdapter
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,6 +40,7 @@ class FavoriteFragment : Fragment() {
     private lateinit var restaurantBtn: Button
     private lateinit var foodsAdapter: FoodsAdapter
     private lateinit var foodList: ArrayList<ModelFood>
+    private lateinit var restaurantList: ArrayList<ModalUser>
     private lateinit var favoriteViewModel: FavoriteViewModel
     private var isFoodState = true
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +56,7 @@ class FavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentFavoriteBinding.inflate(inflater,container , false)
+        binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         favoriteViewModel = ViewModelProvider(this)[FavoriteViewModel::class.java]
         foodBtn = binding.foodsBtn
         restaurantBtn = binding.restaurantsBtn
@@ -55,34 +64,45 @@ class FavoriteFragment : Fragment() {
         restaurantBtn.isSelected = false
         foodBtn.setOnClickListener {
             isFoodState = true
-            stateChanged()
+            stateChanged(container!!)
         }
 
         restaurantBtn.setOnClickListener {
             isFoodState = false
-            stateChanged()
+            stateChanged(container!!)
         }
         setFavFoods(container!!)
         return binding.root
     }
 
 
-
     private fun setFavFoods(container: ViewGroup) {
-        favoriteViewModel.favFoodItemArraylist.observe(viewLifecycleOwner){
+        favoriteViewModel.favFoodItemArraylist.observe(viewLifecycleOwner) {
             foodList = it
-            val adapterCartItem = FavoritesAdapter(container.context, it, favoriteViewModel)
+            val adapterCartItem = FavoritesAdapter(container.context, foodList, favoriteViewModel)
             binding.favoriteRcv.adapter = adapterCartItem
         }
     }
-    private fun stateChanged() {
-        if (isFoodState){
-            foodBtn.isSelected =  true
-            restaurantBtn.isSelected = false
 
-        }else{
-            foodBtn.isSelected =  false
+    private fun setFavRestaurants(container: ViewGroup) {
+        favoriteViewModel.loadRestaurants()
+        favoriteViewModel.favRestaurantArraylist.observe(viewLifecycleOwner) {
+            restaurantList = it
+            val adapter = RestaurantAdapter(container.context, restaurantList)
+            binding.favoriteRcv.adapter = adapter
+
+        }
+    }
+
+    private fun stateChanged(container: ViewGroup) {
+        if (isFoodState) {
+            foodBtn.isSelected = true
+            restaurantBtn.isSelected = false
+            setFavFoods(container)
+        } else {
+            foodBtn.isSelected = false
             restaurantBtn.isSelected = true
+            setFavRestaurants(container)
         }
     }
 
