@@ -29,7 +29,7 @@ class ManageMoney : Fragment() {
     private lateinit var viewPager: ViewPager2
     private lateinit var btnMoney :Button
     private lateinit var btnOrder :Button
-    private lateinit var btnFood :Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,11 +46,13 @@ class ManageMoney : Fragment() {
         binding = FragmentManageMoneyBinding.inflate(inflater,container,  false)
         btnMoney = binding.moneybtn
         btnOrder = binding.orderbtn
-        btnFood= binding.foodbtn
+
         btnMoney.setOnClickListener {
             startActivity(Intent(this.context,ChartForMoney::class.java))
         }
-
+        btnOrder.setOnClickListener {
+            startActivity(Intent(this.context,ChartForOrder::class.java))
+        }
         // Inflate the layout for this fragment
         return binding.root
     }

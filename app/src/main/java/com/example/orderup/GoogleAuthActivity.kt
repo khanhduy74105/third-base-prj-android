@@ -80,6 +80,8 @@ class GoogleAuthActivity : AppCompatActivity() {
                                                         createNewAccount()
                                                     }
                                                     tool.setCurrentId(user.uid)
+                                                    startActivity(Intent(this@GoogleAuthActivity, UserDashboardActivity::class.java))
+                                                    finish()
                                                 }
 
                                                 override fun onCancelled(error: DatabaseError) {

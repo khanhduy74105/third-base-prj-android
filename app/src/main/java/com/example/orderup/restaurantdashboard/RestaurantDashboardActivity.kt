@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager
 import com.example.orderup.LoginActivity
 import com.example.orderup.R
 import com.example.orderup.databinding.ActivityRestaurantDashboardBinding
+import com.example.orderup.lib.tool
 import com.example.orderup.welcome.WelcomeActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -143,6 +144,9 @@ class RestaurantDashboardActivity : AppCompatActivity() {
                 R.id.nav_logout -> {
                     firebaseAuth.signOut()
                     startActivity(Intent(this, WelcomeActivity::class.java))
+
+                    tool.setCurrentId("")
+                    finish()
                     true
                 }
                 R.id.nav_login -> {

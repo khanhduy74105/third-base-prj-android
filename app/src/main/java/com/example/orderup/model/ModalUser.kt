@@ -9,7 +9,6 @@ class ModalUser {
     var profileImage:String = ""
     var userType:String = ""
     var address:String = ""
-    var provider:String? = ""
     constructor()
     constructor(
         uid: String,
@@ -20,7 +19,6 @@ class ModalUser {
         profileImage: String,
         userType: String,
         address: String,
-        provider: String?
     ) {
         this.uid = uid
         this.email = email
@@ -30,7 +28,6 @@ class ModalUser {
         this.profileImage = profileImage
         this.userType = userType
         this.address = address
-        this.provider = provider
     }
 
 

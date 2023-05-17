@@ -19,11 +19,11 @@
             />
         <TextView
             android:id="@+id/usernameTv"
-            android:layout_width="wrap_content"
+            android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:text="Khach hang"
             android:textStyle="bold"
-            android:maxLines="1"
+            android:maxLines="2"
             />
     </LinearLayout>
 

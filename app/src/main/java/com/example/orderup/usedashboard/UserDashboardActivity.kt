@@ -272,6 +272,8 @@ class UserDashboardActivity : AppCompatActivity() {
                         CookieManager.getInstance().removeAllCookies(null);
                         WebStorage.getInstance().deleteAllData();
                     }
+                    tool.setCurrentId("")
+                    finish()
                     startActivity(Intent(this, WelcomeActivity::class.java))
                     true
                 }

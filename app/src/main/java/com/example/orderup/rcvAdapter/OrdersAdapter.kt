@@ -92,10 +92,10 @@ class OrdersAdapter : RecyclerView.Adapter<OrdersAdapter.HolderView> {
             holder.excutingTabLl.visibility = View.INVISIBLE
             holder.imgStateIv.setImageResource(R.drawable.done)
             holder.reorderBtn.setOnClickListener {
-                Toast.makeText(context, "Reorder clciked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Reorder clicked", Toast.LENGTH_SHORT).show()
             }
             holder.rateBtn.setOnClickListener {
-                Toast.makeText(context, "rate clciked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Rate clicked", Toast.LENGTH_SHORT).show()
             }
         } else {
             holder.excutingTabLl.visibility = View.INVISIBLE

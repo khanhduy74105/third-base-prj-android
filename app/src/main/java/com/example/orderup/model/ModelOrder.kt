@@ -1,6 +1,6 @@
 package com.example.orderup.model
 
-class ModelOrder {
+class ModelOrder: Comparable<ModelOrder> {
     var uid: String = ""
     var id:String = ""
     var items: ArrayList<ModelCartItem> = ArrayList()
@@ -25,6 +25,10 @@ class ModelOrder {
         this.timestamp = timestamp
         this.state = state
         this.address = address
+    }
+
+    override fun compareTo(other: ModelOrder): Int {
+        return other.timestamp.compareTo(this.timestamp)
     }
 
 }

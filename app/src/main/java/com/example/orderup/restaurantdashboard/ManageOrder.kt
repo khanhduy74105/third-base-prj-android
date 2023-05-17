@@ -58,7 +58,6 @@ class ManageOrder : Fragment() {
         newOrder = binding.NewOrder
         historyOrder = binding.historyOrder
         getUser()
-        Log.i("Order","test order")
         historyOrderArraylist = ArrayList()
         newOrderArraylist = ArrayList()
         newOrder.setOnClickListener {
@@ -76,14 +75,12 @@ class ManageOrder : Fragment() {
     }
     fun getUser(){
         usersUid =ArrayList()
-        Log.i("Order","test getuser")
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(ds in snapshot.children){
                     val model = ds.child("uid").value.toString()
                     usersUid.add(model)
-                    Log.i("Order",model)
                 }
                 getData(usersUid)
             }
@@ -95,7 +92,6 @@ class ManageOrder : Fragment() {
         })
     }
     fun getData(usersUid:ArrayList<String>) {
-        Log.i("Order","test order1")
         for (i in 1.. usersUid.size) {
             val ref = FirebaseDatabase.getInstance().getReference("Orders/${usersUid[i-1]}")
             ref.addValueEventListener(object : ValueEventListener {
@@ -106,9 +102,7 @@ class ManageOrder : Fragment() {
                         if (model != null) {
                             if(model.state=="waiting"){
                                 newOrderArraylist.add(model)
-                                Log.i("New","${model.state}")
                             }else{
-                                Log.i("Old","${model.state}")
                                 historyOrderArraylist.add(model)
                             }
                         }
@@ -130,6 +124,7 @@ class ManageOrder : Fragment() {
         binding.rcvItemOrder.adapter = adapterCategory
     }
     fun getHistoryOrder(){
+        historyOrderArraylist.sort()
         val adapterCategory = OrderResAdapter(this.requireContext(),historyOrderArraylist)
         binding.rcvItemOrder.layoutManager = GridLayoutManager(this.context, 1)
         binding.rcvItemOrder.adapter = adapterCategory

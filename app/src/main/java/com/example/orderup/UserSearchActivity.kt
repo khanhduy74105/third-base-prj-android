@@ -32,29 +32,22 @@ class UserSearchActivity : AppCompatActivity() {
 
         loadFoods()
 
-        binding.searchEt.addTextChangedListener {
-            object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    try {
-                        adapterFood.filter.filter(s)
-                    } catch (e: Exception) {
-                        Log.d("search food", "loi")
-                    }
-                }
-
-                override fun afterTextChanged(s: Editable?) {
-                }
-
+        binding.searchEt.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
-        }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                try {
+                    adapterFood.filter.filter(s)
+                    Log.d("SEARCHFOOD", "sequence: $s")
+                } catch (e: Exception) {
+                    Log.d("search food", "loi")
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
     }
 
 

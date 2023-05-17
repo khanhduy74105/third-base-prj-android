@@ -25,13 +25,21 @@
         <activity
             android:name=".usedashboard.RestaurantDetailActivity"
             android:exported="false">
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".restaurantdashboard.ChartForOrder"
+            android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".restaurantdashboard.ChartForMoney"
-            android:exported="false">
+            android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -158,6 +166,5 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-    </application>
-
+</application>
 </manifest>
