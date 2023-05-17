@@ -68,12 +68,16 @@ class ChartForOrder : AppCompatActivity() {
                                     }
                                 }
                             }
-                            Log.i("order",confirmOrder.toString())
-                            Log.i("order",cancelOrder.toString())
-                            Log.i("order",waitingOrder.toString())
-                            listData.add(PieEntry(confirmOrder.toFloat(),"confirm" ))
-                            listData.add(PieEntry(cancelOrder.toFloat(),"cancel" ))
-                            listData.add(PieEntry(waitingOrder.toFloat(),"waiting" ))
+                            var total = confirmOrder+waitingOrder+cancelOrder
+                            if(confirmOrder!=0){
+                                listData.add(PieEntry(confirmOrder.toFloat()/total*100,"confirm" ))
+                            }
+                            if(cancelOrder!=0){
+                                listData.add(PieEntry(cancelOrder.toFloat()/total*100,"cancel" ))
+                            }
+                            if(waitingOrder!=0){
+                                listData.add(PieEntry(waitingOrder.toFloat()/total*100,"waiting" ))
+                            }
                             val pieDataSet = PieDataSet(listData,"list")
                             pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS,255)
                             pieDataSet.valueTextColor = Color.BLACK
